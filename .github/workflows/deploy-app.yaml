@@ -37,6 +37,8 @@ jobs:
           dotnet-version: 6.0.x
       - name: Add DevExpress NuGet Package Source
         run: dotnet nuget add source ${{ secrets.DEVEXPRESS_NUGET_URL }}
+      - name: Clear NuGet cache
+        run: dotnet nuget locals -c all
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
