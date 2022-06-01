@@ -1,0 +1,47 @@
+name: Load testing
+
+on:
+  workflow_dispatch
+
+env:
+  VM_MEMORY: 2600
+  VM_CPU: 4
+  VM_IMAGE: UBUNTU
+
+jobs:
+  run:
+    runs-on: farm
+    strategy:
+      matrix:
+        oses: [UBUNTU]
+    env:
+      VM_IMAGE: ${{ matrix.oses }}
+    steps:
+      - name: Show ip
+        run: ip addr show
+      - name: Checkout
+        uses: ./../../checkout
+        with:
+          ref: ${{ github.event.inputs.ref }}
+      - name: Install SQLite
+        run: |
+          sudo apt-get update
+          sudo apt-get install sqlite3
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      - name: Add DevExpress NuGet Package Source
+        run: dotnet nuget add source {{ secrets.DEVEXPRESS_NUGET_URL }}
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Update database
+        run: cd LoadTestingApp.Blazor.Server && dotnet run --updateDatabase --forceUpdate --silent
+      - name: Run application
+        run: dotnet run

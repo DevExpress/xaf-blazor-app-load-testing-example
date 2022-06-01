@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Deterministic>false</Deterministic>
+    <AssemblyVersion>1.0.*</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Configurations>Debug;Release;EasyTest</Configurations>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Model.xafml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model.xafml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DevExpress.ExpressApp.Blazor" Version="22.1.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="22.1.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.Dashboards.Blazor" Version="22.1.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.FileAttachment.Blazor" Version="22.1.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.Office.Blazor" Version="22.1.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.ReportsV2.Blazor" Version="22.1.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.Validation.Blazor" Version="22.1.2-beta" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.115.5" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LoadTestingApp.Module\LoadTestingApp.Module.csproj" />
+  </ItemGroup>
+</Project>

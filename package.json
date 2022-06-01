@@ -1,0 +1,18 @@
+{
+  "name": "xaf-blazor-app-load-testing-example",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "node ./tests/index.js"
+  },
+  "author": "Dmitry Ostashev",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^14.1.2",
+    "puppeteer-cluster": "^0.23.0"
+  }
+}
