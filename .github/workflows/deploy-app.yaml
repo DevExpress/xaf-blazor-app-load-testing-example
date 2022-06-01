@@ -1,4 +1,4 @@
-name: Load testing
+name: Build and Run Application
 
 on:
   workflow_dispatch
