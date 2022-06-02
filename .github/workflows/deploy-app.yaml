@@ -23,8 +23,6 @@ jobs:
         run: ip addr show
       - name: Checkout
         uses: ./../../checkout
-        with:
-          ref: ${{ github.event.inputs.ref }}
       - name: Install SQLite
         run: |
           sudo apt-get update
