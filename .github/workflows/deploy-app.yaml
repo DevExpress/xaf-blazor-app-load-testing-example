@@ -3,26 +3,25 @@ name: Build and Run Application
 on:
   workflow_dispatch
 
-# env:
-#   VM_MEMORY: 2600
-#   VM_CPU: 4
-#   VM_IMAGE: UBUNTU
+env:
+  VM_MEMORY: 2600
+  VM_CPU: 4
+  VM_IMAGE: UBUNTU
 
 jobs:
   run:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    # env:
-    #   VM_IMAGE: ${{ matrix.oses }}
+    runs-on: farm
+    strategy:
+      matrix:
+        oses: [UBUNTU]
+    env:
+      VM_IMAGE: ${{ matrix.oses }}
     steps:
       - name: Show ip
         run: ip addr show
-      - name: Checkout
-        uses: actions/checkout@v2
-        # uses: ./../../checkout
-        # with:
-        #   ref: ${{ github.event.inputs.ref }}
+        uses: ./../../checkout
+        with:
+          ref: ${{ github.event.inputs.ref }}
       - name: Install SQLite
         run: |
           sudo apt-get update
