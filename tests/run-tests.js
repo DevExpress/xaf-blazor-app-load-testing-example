@@ -7,7 +7,8 @@ async function runTests (url, concurrency, headless) {
         puppeteerOptions: { headless,  args: [ '--ignore-certificate-errors' ] },
         concurrency: Cluster.CONCURRENCY_CONTEXT,
         maxConcurrency: concurrency,
-        monitor: true
+        monitor: true,
+        timeout: 60000
     });
 
     await cluster.task(async ({ page, data }) => {
