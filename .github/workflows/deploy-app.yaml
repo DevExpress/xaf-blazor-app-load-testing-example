@@ -45,7 +45,7 @@ jobs:
         run: dotnet run --project LoadTestingApp.Blazor.Server --updateDatabase --forceUpdate --silent
       - name: Generate Certificate
         run: dotnet dev-certs https
-      - name: Trust certificate
-        run: dotnet dev-certs https --trust
+      # - name: Trust certificate
+      #   run: dotnet dev-certs https --trust
       - name: Run application
         run: dotnet run --project LoadTestingApp.Blazor.Server
