@@ -1,7 +1,9 @@
 name: Build and Run Application
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
+    pull_request:
+    branches: [ main ]
 
 env:
   VM_MEMORY: 2600
@@ -19,6 +21,7 @@ jobs:
     steps:
       - name: Show ip
         run: ip addr show
+      - name: Checkout
         uses: ./../../checkout
         with:
           ref: ${{ github.event.inputs.ref }}
