@@ -13,11 +13,9 @@ env:
 jobs:
   run:
     runs-on: farm
-    strategy:
-      matrix:
-        oses: [UBUNTU]
+    timeout-minutes: 20
     env:
-      VM_IMAGE: ${{ matrix.oses }}
+      VM_IMAGE: Win
     steps:
       - name: Show ip
         run: ip addr show
