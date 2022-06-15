@@ -17,8 +17,10 @@ jobs:
     env:
       VM_IMAGE: Win
     steps:
-      # - name: Show ip
-      #   run: ip addr show
+      - name: Get ip
+        run:  |
+          echo "::set-output name={ip}::$(netsh interface ip show address "Ethernet 3" | where { $_ -match "IP Address"} | %{ $_ -replace "^.*IP Address:\W*", ""})"
+        id: get_ip
       - name: Checkout
         uses: ./../../checkout
       # - name: Install SQLite
@@ -48,4 +50,10 @@ jobs:
       # - name: Trust certificate
       #   run: dotnet dev-certs https --trust
       - name: Run application
-        run: dotnet run --project LoadTestingApp.Blazor.Server
+        run: start dotnet run --project LoadTestingApp.Blazor.Server
+      - name: Run tests
+        uses: aurelien-baudet/workflow-dispatch@v2
+        with:
+          workflow: Load Testing
+          wait-for-completion: true
+          inputs: '{ "appUrl": ${{steps.get_ip.outputs.ip}} }'

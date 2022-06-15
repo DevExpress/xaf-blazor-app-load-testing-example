@@ -1,7 +1,12 @@
-name: Load testing
+name: Load Testing
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      appUrl:
+        description: 'Appliation url'  
+        required: true
+        default: ''
 
 env:
   VM_MEMORY: 2600
@@ -13,6 +18,17 @@ jobs:
     runs-on: farm
     strategy:
       matrix:
-        workers: [worker_01, worker_02, worker_03, worker_04, worker_05, worker_06, worker_07, worker_08, worker_09, worker_10]
+        workers: [worker_01, worker_02]
     env:
       WORKER_NAME: ${{ matrix.workers }}
+    steps:
+      - name: Checkout
+        uses: ./../../checkout
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - name: Install Packages
+        run: npm i
+      - name: Run Tests
+        run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 10
