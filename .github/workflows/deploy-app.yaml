@@ -50,8 +50,7 @@ jobs:
       # - name: Trust certificate
       #   run: dotnet dev-certs https --trust
       - name: Run application
-        run: start dotnet run --project LoadTestingApp.Blazor.Server
-        shell: cmd
+        run: Start-Process -nonewwindow dotnet "run --project LoadTestingApp.Blazor.Server"
       - name: Run tests
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
