@@ -57,4 +57,4 @@ jobs:
         with:
           workflow: Load Testing
           wait-for-completion: true
-          inputs: '{ "appUrl": ${{steps.get_ip.outputs.ip}} }'
+          inputs: '{ "appUrl": "${{ steps.get_ip.outputs.ip }}" }'
