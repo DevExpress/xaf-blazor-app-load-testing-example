@@ -51,6 +51,7 @@ jobs:
       #   run: dotnet dev-certs https --trust
       - name: Run application
         run: start dotnet run --project LoadTestingApp.Blazor.Server
+        shell: cmd
       - name: Run tests
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
