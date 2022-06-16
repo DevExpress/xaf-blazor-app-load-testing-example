@@ -19,10 +19,10 @@ jobs:
     steps:
       - name: Get ip
         run:  |
-          netsh interface ip show address "Ethernet 3" | where { $_ -match 'IP Address'} | %{ $_ -replace '^.*IP Address:\W*', ''}
-          ipconfig /all
-          echo "::set-output name={ip}::$(netsh interface ip show address "Ethernet 3" | where { $_ -match 'IP Address'} | %{ $_ -replace '^.*IP Address:\W*', ''})"
+          $env:LOCAL_IP_ADDRESS = netsh interface ip show address "Ethernet 3" | where { $_ -match 'IP Address'} | %{ $_ -replace '^.*IP Address:\W*', ''}
         id: get_ip
+      - name: Show IP
+        run: echo $env:LOCAL_IP_ADDRESS
       - name: Checkout
         uses: ./../../checkout
       # - name: Install SQLite
@@ -60,4 +60,4 @@ jobs:
           workflow: Load Testing
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
-          inputs: '{ "appUrl": "${{ steps.get_ip.outputs.ip }}" }'
+          inputs: '{ "appUrl": "$LOCAL_IP_ADDRESS" }'
