@@ -56,5 +56,6 @@ jobs:
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
           workflow: Load Testing
+          token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           inputs: '{ "appUrl": "${{ steps.get_ip.outputs.ip }}" }'
