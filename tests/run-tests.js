@@ -7,7 +7,7 @@ async function runTests (url, concurrency, headless) {
         puppeteerOptions: { headless,  args: [ '--ignore-certificate-errors' ] },
         concurrency: Cluster.CONCURRENCY_CONTEXT,
         maxConcurrency: concurrency,
-        monitor: true,
+        monitor: false,
         timeout: 60000
     });
 
@@ -15,7 +15,13 @@ async function runTests (url, concurrency, headless) {
         await simpleNavigaionTest({ page, data });
     });
 
+    const startTime = Date.now();
+
     await Promise.all(new Array(concurrency).fill('').map(i => cluster.execute(url)));
+
+    const duration = (Date.now() - startTime) / 1000;
+
+    console.log(`All tests took ${duration} seconds`);
 
     await cluster.idle();
     await cluster.close();
