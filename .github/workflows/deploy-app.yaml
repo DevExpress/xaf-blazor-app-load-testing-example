@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Get ip
         run:  |
-          echo "::set-output name={ip}::$(netsh interface ip show address "Ethernet 3" | where { $_ -match "IP Address"} | %{ $_ -replace "^.*IP Address:\W*", ""})"
+          echo "::set-output name={ip}::$(netsh interface ip show address "Ethernet 3" | where { $_ -match 'IP Address'} | %{ $_ -replace '^.*IP Address:\W*', ''})"
         id: get_ip
       - name: Checkout
         uses: ./../../checkout
