@@ -54,7 +54,7 @@ jobs:
       - name: Install Packages
         run: npm i
       - name: Run Tests
-        run: node ./tests/index.js 172.21.86.132 10
+        run: node ./tests/index.js localhost 10
       # - name: Run tests
       #   uses: aurelien-baudet/workflow-dispatch@v2
       #   with:
