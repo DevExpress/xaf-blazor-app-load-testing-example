@@ -51,10 +51,14 @@ jobs:
       #   run: dotnet dev-certs https --trust
       - name: Run application
         run: Start-Process -nonewwindow dotnet "run --project LoadTestingApp.Blazor.Server"
-      - name: Run tests
-        uses: aurelien-baudet/workflow-dispatch@v2
-        with:
-          workflow: Load Testing
-          token: ${{ secrets.PERSONAL_TOKEN }}
-          wait-for-completion: true
-          inputs: '{ "appUrl": "172.21.86.132" }'
+      - name: Install Packages
+        run: npm i
+      - name: Run Tests
+        run: node ./tests/index.js 172.21.86.132 10
+      # - name: Run tests
+      #   uses: aurelien-baudet/workflow-dispatch@v2
+      #   with:
+      #     workflow: Load Testing
+      #     token: ${{ secrets.PERSONAL_TOKEN }}
+      #     wait-for-completion: true
+      #     inputs: '{ "appUrl": "172.21.86.132" }'
