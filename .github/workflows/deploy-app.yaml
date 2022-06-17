@@ -5,17 +5,17 @@ on:
     pull_request:
     branches: [ main ]
 
-env:
-  VM_MEMORY: 2600
-  VM_CPU: 4
-  VM_IMAGE: UBUNTU
+# env:
+#   VM_MEMORY: 2600
+#   VM_CPU: 4
+#   VM_IMAGE: UBUNTU
 
 jobs:
   run:
-    runs-on: farm
+    runs-on: [self-hosted, Windows, X64]
     timeout-minutes: 20
-    env:
-      VM_IMAGE: Win
+    # env:
+    #   VM_IMAGE: Win
     steps:
       - name: Get ip
         run: echo "LOCAL_IP_ADDRESS=$(netsh interface ip show address 'Ethernet 3' | where { $_ -match 'IP Address'} | %{ $_ -replace '^.*IP Address:\W*', ''})" >> $env:GITHUB_ENV
