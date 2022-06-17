@@ -17,10 +17,10 @@ jobs:
     # env:
     #   VM_IMAGE: Win
     steps:
-      - name: Get ip
-        run: echo "LOCAL_IP_ADDRESS=$(netsh interface ip show address 'Ethernet 3' | where { $_ -match 'IP Address'} | %{ $_ -replace '^.*IP Address:\W*', ''})" >> $env:GITHUB_ENV
-      - name: Show IP
-        run: echo ${{ env.LOCAL_IP_ADDRESS }}
+      # - name: Get ip
+      #   run: echo "LOCAL_IP_ADDRESS=$(netsh interface ip show address 'Ethernet 3' | where { $_ -match 'IP Address'} | %{ $_ -replace '^.*IP Address:\W*', ''})" >> $env:GITHUB_ENV
+      # - name: Show IP
+      #   run: echo ${{ env.LOCAL_IP_ADDRESS }}
       - name: Checkout
         uses: ./../../checkout
       # - name: Install SQLite
@@ -57,4 +57,4 @@ jobs:
           workflow: Load Testing
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
-          inputs: '{ "appUrl": "${{ env.LOCAL_IP_ADDRESS }}" }'
+          inputs: '{ "appUrl": "172.21.86.132" }'
