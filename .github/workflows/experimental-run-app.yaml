@@ -8,11 +8,6 @@ on:
         required: true
         default: ''
 
-env:
-  VM_MEMORY: 2600
-  VM_CPU: 4
-  VM_IMAGE: UBUNTU
-
 jobs:
   run:
     runs-on: [self-hosted, Windows, X64]
