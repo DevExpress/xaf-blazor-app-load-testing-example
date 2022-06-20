@@ -22,7 +22,7 @@ jobs:
       # - name: Show IP
       #   run: echo ${{ env.LOCAL_IP_ADDRESS }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: ./../../checkout
       # - name: Install SQLite
       #   run: |
       #     sudo apt-get update
