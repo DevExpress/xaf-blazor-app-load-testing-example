@@ -1,4 +1,4 @@
-name: Load Testing
+name: Experimental Node App
 
 on:
   workflow_dispatch:
