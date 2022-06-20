@@ -10,11 +10,8 @@ env:
 jobs:
   run:
     runs-on: farm
-    strategy:
-      matrix:
-        oses: [UBUNTU]
     env:
-      VM_IMAGE: ${{ matrix.oses }}
+      VM_IMAGE: Win
 
     timeout-minutes: 30
     steps:
