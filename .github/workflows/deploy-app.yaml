@@ -17,10 +17,10 @@ jobs:
     env:
       VM_IMAGE: Win
     steps:
-      # - name: Get ip
-      #   run: echo "LOCAL_IP_ADDRESS=$(netsh interface ip show address 'Ethernet 3' | where { $_ -match 'IP Address'} | %{ $_ -replace '^.*IP Address:\W*', ''})" >> $env:GITHUB_ENV
-      # - name: Show IP
-      #   run: echo ${{ env.LOCAL_IP_ADDRESS }}
+      - name: Get ip
+        run: echo "LOCAL_IP_ADDRESS=$(netsh interface ip show address 'Ethernet 3' | where { $_ -match 'IP Address'} | %{ $_ -replace '^.*IP Address:\W*', ''})" >> $env:GITHUB_ENV
+      - name: Show IP
+        run: echo ${{ env.LOCAL_IP_ADDRESS }}
       - name: Checkout
         uses: ./../../checkout
       # - name: Install SQLite
@@ -45,21 +45,21 @@ jobs:
         run: dotnet build --no-restore
       - name: Update database
         run: dotnet run --project LoadTestingApp.Blazor.Server --updateDatabase --forceUpdate --silent
-      - name: Generate Certificate
-        run: dotnet dev-certs https
+      # - name: Generate Certificate
+      #   run: dotnet dev-certs https
       # - name: Trust certificate
       #   run: dotnet dev-certs https --trust
-      - name: Install Packages
-        run: npm i
+      # - name: Install Packages
+      #   run: npm i
       # - name: Run application
       #   run: dotnet "run --project LoadTestingApp.Blazor.Server" ;
       - name: Run Tests
-        run: start dotnet run --project LoadTestingApp.Blazor.Server & node ./tests/index.js localhost 10
+        run: start dotnet run --project LoadTestingApp.Blazor.Server
         shell: cmd
-      # - name: Run tests
-      #   uses: aurelien-baudet/workflow-dispatch@v2
-      #   with:
-      #     workflow: Load Testing
-      #     token: ${{ secrets.PERSONAL_TOKEN }}
-      #     wait-for-completion: true
-      #     inputs: '{ "appUrl": "172.21.86.132" }'
+      - name: Run tests
+        uses: aurelien-baudet/workflow-dispatch@v2
+        with:
+          workflow: Load Testing
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          wait-for-completion: true
+          inputs: '{ "appUrl": "${{ env.LOCAL_IP_ADDRESS }}" }'
