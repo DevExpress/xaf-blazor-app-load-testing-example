@@ -1,31 +1,32 @@
 name: Build and Run Application
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
+    pull_request:
+    branches: [ main ]
 
-env:
-  VM_MEMORY: 2600
-  VM_CPU: 4
-  VM_IMAGE: UBUNTU
+# env:
+#   VM_MEMORY: 2600
+#   VM_CPU: 4
+#   VM_IMAGE: UBUNTU
 
 jobs:
   run:
-    runs-on: farm
-    strategy:
-      matrix:
-        oses: [UBUNTU]
-    env:
-      VM_IMAGE: ${{ matrix.oses }}
+    runs-on: [self-hosted, Windows, X64]
+    timeout-minutes: 30
+    # env:
+    #   VM_IMAGE: Win
     steps:
-      - name: Show ip
-        run: ip addr show
-        uses: ./../../checkout
-        with:
-          ref: ${{ github.event.inputs.ref }}
-      - name: Install SQLite
-        run: |
-          sudo apt-get update
-          sudo apt-get install sqlite3
+      # - name: Get ip
+      #   run: echo "LOCAL_IP_ADDRESS=$(netsh interface ip show address 'Ethernet 3' | where { $_ -match 'IP Address'} | %{ $_ -replace '^.*IP Address:\W*', ''})" >> $env:GITHUB_ENV
+      # - name: Show IP
+      #   run: echo ${{ env.LOCAL_IP_ADDRESS }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      # - name: Install SQLite
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install sqlite3
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
@@ -43,6 +44,21 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Update database
-        run: cd LoadTestingApp.Blazor.Server && dotnet run --updateDatabase --forceUpdate --silent
+        run: dotnet run --project LoadTestingApp.Blazor.Server --updateDatabase --forceUpdate --silent
+      - name: Generate Certificate
+        run: dotnet dev-certs https
+      # - name: Trust certificate
+      #   run: dotnet dev-certs https --trust
       - name: Run application
-        run: dotnet run
+        run: Start-Process -nonewwindow dotnet "run --project LoadTestingApp.Blazor.Server"
+      - name: Install Packages
+        run: npm i
+      - name: Run Tests
+        run: node ./tests/index.js localhost 10
+      # - name: Run tests
+      #   uses: aurelien-baudet/workflow-dispatch@v2
+      #   with:
+      #     workflow: Load Testing
+      #     token: ${{ secrets.PERSONAL_TOKEN }}
+      #     wait-for-completion: true
+      #     inputs: '{ "appUrl": "172.21.86.132" }'

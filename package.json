@@ -7,12 +7,15 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "node ./tests/index.js"
+    "test": "node ./tests/index.js",
+    "testcafe-test": "start node ./node-web-app/index.js && npx testcafe chrome ./tests/testcafe-experimental.js"
   },
   "author": "Dmitry Ostashev",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.18.1",
     "puppeteer": "^14.1.2",
-    "puppeteer-cluster": "^0.23.0"
+    "puppeteer-cluster": "^0.23.0",
+    "testcafe": "^1.19.0"
   }
 }
