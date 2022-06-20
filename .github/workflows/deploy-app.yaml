@@ -49,10 +49,10 @@ jobs:
         run: dotnet dev-certs https
       # - name: Trust certificate
       #   run: dotnet dev-certs https --trust
-      - name: Run application
-        run: Start-Process -nonewwindow dotnet "run --project LoadTestingApp.Blazor.Server"
       - name: Install Packages
         run: npm i
+      - name: Run application
+        run: dotnet "run --project LoadTestingApp.Blazor.Server" &
       - name: Run Tests
         run: node ./tests/index.js localhost 10
       # - name: Run tests
