@@ -51,10 +51,11 @@ jobs:
       #   run: dotnet dev-certs https --trust
       - name: Install Packages
         run: npm i
-      - name: Run application
-        run: dotnet "run --project LoadTestingApp.Blazor.Server" &
+      # - name: Run application
+      #   run: dotnet "run --project LoadTestingApp.Blazor.Server" ;
       - name: Run Tests
-        run: node ./tests/index.js localhost 10
+        run: start dotnet run --project LoadTestingApp.Blazor.Server & node ./tests/index.js localhost 10
+        shell: cmd
       # - name: Run tests
       #   uses: aurelien-baudet/workflow-dispatch@v2
       #   with:
