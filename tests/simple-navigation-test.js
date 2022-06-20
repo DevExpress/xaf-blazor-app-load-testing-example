@@ -1,7 +1,18 @@
 async function simpleNavigaionTest({ page, data: url }) {
     const startTime = Date.now();
 
-    await page.goto(url);
+    const retry = (fn, ms) => new Promise(resolve => {
+        fn()
+            .then(resolve)
+            .catch(() => {
+                setTimeout(() => {
+                    console.log('retrying...');
+                    retry(fn, ms).then(resolve);
+                }, ms);
+            })
+    });
+
+    await retry(() => page.goto(url), 1000);
 
     try {
         await page.waitForSelector('.dxbs-grid div');
