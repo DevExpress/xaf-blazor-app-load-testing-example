@@ -28,10 +28,10 @@ jobs:
       - name: Checkout
         # uses: ./../../checkout
         uses: actions/checkout@v2
-      # - name: Install SQLite
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install sqlite3
+      - name: Install SQLite
+        run: |
+          sudo apt-get update
+          sudo apt-get install sqlite3
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
