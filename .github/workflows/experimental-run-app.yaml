@@ -19,7 +19,7 @@ jobs:
       # - name: Run Tests
       #   run: npm run testcafe-test
       - name: Run application
-        run: dotnet "run --project LoadTestingApp.Blazor.Server"
+        run: dotnet run --project LoadTestingApp.Blazor.Server
       # - name: Install Packages
       #   run: npm i
       # - name: Run Tests
