@@ -12,10 +12,10 @@ env:
 
 jobs:
   run:
-    runs-on: ubuntu-latest
-    # strategy:
-    #   matrix:
-    #     oses: [UBUNTU]
+    runs-on: farm
+    strategy:
+      matrix:
+        oses: [UBUNTU]
     env:
       VM_IMAGE: ${{ matrix.oses }}
     # runs-on: [self-hosted, Windows, X64]
@@ -26,20 +26,14 @@ jobs:
       # - name: Show IP
       #   run: echo ${{ env.LOCAL_IP_ADDRESS }}
       - name: Checkout
-        # uses: ./../../checkout
-        uses: actions/checkout@v2
-      # - name: Modify sources list
+        uses: ./../../checkout
+        # uses: actions/checkout@v2
+      - name: Install MySQL
+        uses: ankane/setup-mysql@v1
+      # - name: Install SQLite
       #   run: |
-      #     sudo sed -i 's/\# deb/deb/gi' /etc/apt/sources.list |
-      #     sudo add-apt-repository main
-      #     sudo add-apt-repository universe
-      #     sudo add-apt-repository restricted
-      #     sudo add-apt-repository multiverse
-      #     sudo apt update
-      - name: Install SQLite
-        run: |
-          sudo apt-get update
-          sudo apt-get install sqlite3
+      #     sudo apt-get update
+      #     sudo apt-get install sqlite3
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
