@@ -5,18 +5,21 @@ on:
     pull_request:
     branches: [ main ]
 
-# env:
-#   VM_MEMORY: 2600
-#   VM_CPU: 4
+env:
+  VM_MEMORY: 2600
+  VM_CPU: 4
 #   VM_IMAGE: WIN10
 
 jobs:
   run:
-    # runs-on: farm
-    runs-on: [self-hosted, Windows, X64]
-    timeout-minutes: 30
+    runs-on: farm
+    strategy:
+      matrix:
+        oses: [UBUNTU]
     env:
-      VM_IMAGE: Win
+      VM_IMAGE: ${{ matrix.oses }}
+    # runs-on: [self-hosted, Windows, X64]
+    timeout-minutes: 30
     steps:
       # - name: Get ip
       #   run: echo "LOCAL_IP_ADDRESS=$(netsh interface ip show address 'Ethernet 3' | where { $_ -match 'IP Address'} | %{ $_ -replace '^.*IP Address:\W*', ''})" >> $env:GITHUB_ENV
@@ -51,17 +54,17 @@ jobs:
       #   run: dotnet dev-certs https
       # - name: Trust certificate
       #   run: dotnet dev-certs https --trust
-      # - name: Install Packages
-      #   run: npm i
-      # - name: Run application
-      #   run: dotnet "run --project LoadTestingApp.Blazor.Server" ;
+      - name: Install Packages
+        run: npm i
+      - name: Run application
+        run: dotnet run --project LoadTestingApp.Blazor.Server &
       - name: Run Tests
-        run: start dotnet run --project LoadTestingApp.Blazor.Server
-        shell: cmd
-      - name: Run tests
-        uses: aurelien-baudet/workflow-dispatch@v2
-        with:
-          workflow: Load Testing
-          token: ${{ secrets.PERSONAL_TOKEN }}
-          wait-for-completion: true
-          inputs: '{ "appUrl": "172.21.86.132" }'
+        run: node ./tests/index.js localhost 10
+      #   shell: cmd
+      # - name: Run tests
+      #   uses: aurelien-baudet/workflow-dispatch@v2
+      #   with:
+      #     workflow: Load Testing
+      #     token: ${{ secrets.PERSONAL_TOKEN }}
+      #     wait-for-completion: true
+      #     inputs: '{ "appUrl": "172.21.86.132" }'
