@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "node ./tests/index.js",
-    "testcafe-test": "start dotnet run --project LoadTestingApp.Blazor.Server && npx testcafe chrome ./tests/testcafe-experimental.js"
+    "testcafe-test": "start dotnet run --project LoadTestingApp.Blazor.Server && node ./tests/index.js localhost 10"
   },
   "author": "Dmitry Ostashev",
   "license": "MIT",

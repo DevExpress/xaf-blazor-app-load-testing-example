@@ -2,11 +2,6 @@ name: Experimental Node App
 
 on:
   workflow_dispatch:
-    inputs:
-      appUrl:
-        description: 'Appliation url'  
-        required: true
-        default: ''
 
 jobs:
   run:
@@ -21,11 +16,11 @@ jobs:
           node-version: '14.x'
       - name: Install Packages
         run: npm i
-      # - name: Run Tests
-      #   run: npm run testcafe-test
-      - name: Run application
-        run: Start-Process -nonewwindow dotnet "run --project LoadTestingApp.Blazor.Server"
-      - name: Install Packages
-        run: npm i
       - name: Run Tests
-        run: node ./tests/index.js localhost 10
+        run: npm run testcafe-test
+      # - name: Run application
+      #   run: Start-Process -nonewwindow dotnet "run --project LoadTestingApp.Blazor.Server"
+      # - name: Install Packages
+      #   run: npm i
+      # - name: Run Tests
+      #   run: node ./tests/index.js localhost 10
