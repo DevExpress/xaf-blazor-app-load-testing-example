@@ -18,10 +18,10 @@ jobs:
     env:
       VM_IMAGE: Win
     steps:
-      - name: Get ip
-        run: echo "LOCAL_IP_ADDRESS=$(netsh interface ip show address 'Ethernet 3' | where { $_ -match 'IP Address'} | %{ $_ -replace '^.*IP Address:\W*', ''})" >> $env:GITHUB_ENV
-      - name: Show IP
-        run: echo ${{ env.LOCAL_IP_ADDRESS }}
+      # - name: Get ip
+      #   run: echo "LOCAL_IP_ADDRESS=$(netsh interface ip show address 'Ethernet 3' | where { $_ -match 'IP Address'} | %{ $_ -replace '^.*IP Address:\W*', ''})" >> $env:GITHUB_ENV
+      # - name: Show IP
+      #   run: echo ${{ env.LOCAL_IP_ADDRESS }}
       - name: Checkout
         # uses: ./../../checkout
         uses: actions/checkout@v2
