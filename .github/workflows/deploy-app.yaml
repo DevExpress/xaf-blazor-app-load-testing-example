@@ -35,16 +35,17 @@ jobs:
       #     sudo apt-get update
       #     sudo apt-get install sqlite3
       - name: Use Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14.x'
+        run: |
+          curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
+          sudo bash /tmp/nodesource_setup.sh
+          sudo apt install nodejs
+        # uses: actions/setup-node@v2
+        # with:
+        #   node-version: '14.x'
       - name: Set npm registry
         run: npm config set registry https://registry.npmjs.org/
       - name: Install sqlite
-        run: |
-          sudo ln -s /usr/local/lib/node /usr/lib/node
-          sudo ln -s /usr/local/bin/npm /usr/bin/npm
-          sudo npm i -g sqlite3
+        run: sudo npm i -g sqlite3
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
