@@ -17,7 +17,13 @@ async function runTests (url, concurrency, headless) {
 
     const startTime = Date.now();
 
-    await Promise.all(new Array(concurrency).fill('').map(i => cluster.execute(url)));
+    try {
+        await Promise.all(new Array(concurrency).fill('').map(i => cluster.execute(url)));
+    }
+
+    catch (err) {
+        console.log(err);
+    }
 
     const duration = (Date.now() - startTime) / 1000;
 
