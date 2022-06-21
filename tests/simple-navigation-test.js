@@ -21,15 +21,17 @@ async function simpleNavigaionTest({ page, data: url }) {
             window.scrollTo(0, window.document.body.scrollHeight);
           });
 
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 19; i++) {
             const nextPageButton = await page.waitForSelector('[data-args="PBN"] div svg');
 
             await nextPageButton.click();
+
+            await page.waitForFunction(`document.querySelector(".dxbs-grid .page-link input").value === "${i + 2}"`);
             await page.waitForTimeout(500);
         }
     }
     catch (err) {
-        await page.screenshot({ path: 'screenshot', type: 'png' });
+        await page.screenshot({ path: 'screenshot.png', type: 'png' });
 
         throw err;
     }
