@@ -51,6 +51,10 @@ jobs:
         run: npm i
       - name: Run application
         run: dotnet run --project LoadTestingApp.Blazor.Server &
+      - name: Show CPU usage
+        run: ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10
+      - name: Show memory usage
+        run: free
       - name: Run tests
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
@@ -58,3 +62,7 @@ jobs:
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           inputs: '{ "appUrl": "${{ env.LOCAL_IP_ADDRESS }}" }'
+      - name: Show CPU usage
+        run: ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10
+      - name: Show memory usage
+        run: free
