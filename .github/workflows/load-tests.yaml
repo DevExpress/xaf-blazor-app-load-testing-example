@@ -31,4 +31,4 @@ jobs:
       - name: Install Packages
         run: npm i
       - name: Run Tests
-        run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 10
+        run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 50

@@ -18,7 +18,6 @@ jobs:
         oses: [UBUNTU]
     env:
       VM_IMAGE: ${{ matrix.oses }}
-    # runs-on: [self-hosted, Windows, X64]
     timeout-minutes: 30
     steps:
       - name: Get ip
@@ -32,9 +31,6 @@ jobs:
           curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
           sudo bash /tmp/nodesource_setup.sh
           sudo apt install nodejs
-        # uses: actions/setup-node@v2
-        # with:
-        #   node-version: '14.x'
       - name: Set npm registry
         run: npm config set registry https://registry.npmjs.org/
       - name: Install sqlite
@@ -51,17 +47,10 @@ jobs:
         run: dotnet build --no-restore
       - name: Update database
         run: dotnet run --project LoadTestingApp.Blazor.Server --updateDatabase --forceUpdate --silent
-      # - name: Generate Certificate
-      #   run: dotnet dev-certs https
-      # - name: Trust certificate
-      #   run: dotnet dev-certs https --trust
       - name: Install Packages
         run: npm i
       - name: Run application
         run: dotnet run --project LoadTestingApp.Blazor.Server &
-      # - name: Run Tests
-      #   run: node ./tests/index.js localhost 10
-      #   shell: cmd
       - name: Run tests
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
