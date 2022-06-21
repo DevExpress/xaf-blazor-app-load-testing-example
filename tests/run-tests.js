@@ -23,6 +23,8 @@ async function runTests (url, concurrency, headless) {
 
     catch (err) {
         console.log(err);
+
+        throw err;
     }
 
     const duration = (Date.now() - startTime) / 1000;
