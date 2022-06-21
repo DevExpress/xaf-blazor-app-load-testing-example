@@ -7,8 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "node ./tests/index.js",
-    "testcafe-test": "start dotnet run --project LoadTestingApp.Blazor.Server && node ./tests/index.js localhost 10"
+    "test": "node ./tests/index.js"
   },
   "author": "Dmitry Ostashev",
   "license": "MIT",

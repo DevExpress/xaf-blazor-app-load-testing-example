@@ -17,6 +17,10 @@ async function simpleNavigaionTest({ page, data: url }) {
     try {
         await page.waitForSelector('.dxbs-grid div');
 
+        await page.evaluate(() => {
+            window.scrollTo(0, window.document.body.scrollHeight);
+          });
+
         for (let i = 0; i < 20; i++) {
             const nextPageButton = await page.waitForSelector('[data-args="PBN"] div svg');
 
