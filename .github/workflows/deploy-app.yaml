@@ -21,19 +21,12 @@ jobs:
     # runs-on: [self-hosted, Windows, X64]
     timeout-minutes: 30
     steps:
-      # - name: Get ip
-      #   run: echo "LOCAL_IP_ADDRESS=$(netsh interface ip show address 'Ethernet 3' | where { $_ -match 'IP Address'} | %{ $_ -replace '^.*IP Address:\W*', ''})" >> $env:GITHUB_ENV
-      # - name: Show IP
-      #   run: echo ${{ env.LOCAL_IP_ADDRESS }}
+      - name: Get ip
+        run: echo "LOCAL_IP_ADDRESS=$(ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p')" >> $GITHUB_ENV
+      - name: Show IP
+        run: echo ${{ env.LOCAL_IP_ADDRESS }}
       - name: Checkout
         uses: ./../../checkout
-        # uses: actions/checkout@v2
-      # - name: Install MySQL
-      #   uses: ankane/setup-mysql@v1
-      # - name: Install SQLite
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install sqlite3
       - name: Use Node.js
         run: |
           curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
@@ -66,8 +59,8 @@ jobs:
         run: npm i
       - name: Run application
         run: dotnet run --project LoadTestingApp.Blazor.Server &
-      - name: Run Tests
-        run: node ./tests/index.js localhost 10
+      # - name: Run Tests
+      #   run: node ./tests/index.js localhost 10
       #   shell: cmd
       # - name: Run tests
       #   uses: aurelien-baudet/workflow-dispatch@v2
