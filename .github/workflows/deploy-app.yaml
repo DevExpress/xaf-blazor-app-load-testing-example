@@ -28,8 +28,8 @@ jobs:
       - name: Checkout
         uses: ./../../checkout
         # uses: actions/checkout@v2
-      - name: Install MySQL
-        uses: ankane/setup-mysql@v1
+      # - name: Install MySQL
+      #   uses: ankane/setup-mysql@v1
       # - name: Install SQLite
       #   run: |
       #     sudo apt-get update
@@ -38,6 +38,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14.x'
+      - name: Install sqlite
+        run: npm i -g sqlite3
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
