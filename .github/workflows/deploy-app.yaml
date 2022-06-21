@@ -62,10 +62,10 @@ jobs:
       # - name: Run Tests
       #   run: node ./tests/index.js localhost 10
       #   shell: cmd
-      # - name: Run tests
-      #   uses: aurelien-baudet/workflow-dispatch@v2
-      #   with:
-      #     workflow: Load Testing
-      #     token: ${{ secrets.PERSONAL_TOKEN }}
-      #     wait-for-completion: true
-      #     inputs: '{ "appUrl": "172.21.86.132" }'
+      - name: Run tests
+        uses: aurelien-baudet/workflow-dispatch@v2
+        with:
+          workflow: Load Testing
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          wait-for-completion: true
+          inputs: '{ "appUrl": "${{ env.LOCAL_IP_ADDRESS }}" }'
