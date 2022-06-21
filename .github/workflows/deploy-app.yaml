@@ -41,7 +41,7 @@ jobs:
       - name: Set npm registry
         run: npm config set registry https://registry.npmjs.org/
       - name: Install sqlite
-        run: npm i -g sqlite3
+        run: sudo npm i -g sqlite3
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
