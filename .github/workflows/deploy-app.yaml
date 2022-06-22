@@ -52,10 +52,6 @@ jobs:
           while true; do ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10; sleep 30; kill $!; done &
       - name: Run application
         run: dotnet run --project LoadTestingApp.Blazor.Server &
-      - name: Show CPU usage
-        run: ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10
-      - name: Show memory usage
-        run: free
       - name: Run tests
         uses: aurelien-baudet/workflow-dispatch@v2
         with:

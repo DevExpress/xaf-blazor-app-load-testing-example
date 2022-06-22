@@ -8,8 +8,7 @@ namespace LoadTestingApp.Module {
         public Employee (Session session) : base (session) { }
 
         private Employee manager;
-        [DataSourceProperty("Department.Employees", DataSourcePropertyIsNullMode.SelectAll)]
-        [DataSourceCriteria("Position.Title = 'Manager' AND Oid != '@This.Oid'")]
+
         public Employee Manager {
             get {
                 return manager;

@@ -18,7 +18,7 @@ jobs:
     runs-on: farm
     strategy:
       matrix:
-        workers: [worker_01]
+        workers: [worker_01, worker_02]
     env:
       WORKER_NAME: ${{ matrix.workers }}
     steps:

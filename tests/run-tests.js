@@ -1,10 +1,10 @@
-const { Cluster }         = require('puppeteer-cluster');
-const simpleNavigaionTest = require('./simple-navigation-test');
-
+const { Cluster }  = require('puppeteer-cluster');
+const listViewTest = require('./list-view-test');
+const detailViewTest = require('./detail-view-test');
 
 async function runTests (url, concurrency, headless) {
     const cluster = await Cluster.launch({
-        puppeteerOptions: { headless,  args: [ '--ignore-certificate-errors' ] },
+        puppeteerOptions: { headless, slowMo: 50, args: [ '--ignore-certificate-errors' ] },
         concurrency: Cluster.CONCURRENCY_CONTEXT,
         maxConcurrency: concurrency,
         monitor: false,
@@ -12,7 +12,8 @@ async function runTests (url, concurrency, headless) {
     });
 
     await cluster.task(async ({ page, data }) => {
-        await simpleNavigaionTest({ page, data });
+        await listViewTest({ page, data });
+        await detailViewTest({ page, data });
     });
 
     const startTime = Date.now();
