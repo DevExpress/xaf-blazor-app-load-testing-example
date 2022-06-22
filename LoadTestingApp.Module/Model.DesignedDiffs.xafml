@@ -3,6 +3,7 @@
   <Options>
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
+  <NavigationItems GenerateRelatedViewVariantsGroup="True" RelatedViewVariantsGroupCaption="Views" GenerateRelatedReportsGroup="True" StartupNavigationItem="StickyNote_ListView"/>
   <Views>
   </Views>
 </Application>

@@ -12,11 +12,23 @@ namespace LoadTestingApp.Module.DatabaseUpdate;
 // For more typical usage scenarios, be sure to check out https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Updating.ModuleUpdater
 public class Updater : ModuleUpdater {
     private const int notesCount = 2000;
+    private const int employeesCount = 5;
     public Updater(IObjectSpace objectSpace, Version currentDBVersion) :
         base(objectSpace, currentDBVersion) {
     }
     public override void UpdateDatabaseAfterUpdateSchema() {
         base.UpdateDatabaseAfterUpdateSchema();
+
+        for (int i = 0; i < employeesCount; i++) {
+            string employeeName = string.Format("Employee {0}", i);
+
+            Employee employee = ObjectSpace.FirstOrDefault<Employee>(employee => employee.FirstName == employeeName);
+
+            if (employee == null) {
+                employee = ObjectSpace.CreateObject<Employee>();
+                employee.FirstName = employeeName;
+            }
+        }
 
         for (int i = 0; i < notesCount; i++) {
             string noteName = string.Format("Note {0}", i);

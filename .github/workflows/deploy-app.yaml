@@ -47,8 +47,6 @@ jobs:
         run: dotnet build --no-restore
       - name: Update database
         run: dotnet run --project LoadTestingApp.Blazor.Server --updateDatabase --forceUpdate --silent
-      - name: Install Packages
-        run: npm i
       - name: Run application
         run: dotnet run --project LoadTestingApp.Blazor.Server &
       - name: Show CPU usage

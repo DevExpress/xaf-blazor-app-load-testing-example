@@ -9,7 +9,7 @@ on:
         default: ''
 
 env:
-  VM_MEMORY: 2600
+  VM_MEMORY: 3072
   VM_CPU: 4
   VM_IMAGE: UBUNTU
 
@@ -18,7 +18,7 @@ jobs:
     runs-on: farm
     strategy:
       matrix:
-        workers: [worker_01, worker_02, worker_03]
+        workers: [worker_01, worker_02]
     env:
       WORKER_NAME: ${{ matrix.workers }}
     steps:

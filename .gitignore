@@ -108,3 +108,4 @@ bin
 obj
 
 *.csproj.user
+.vs
