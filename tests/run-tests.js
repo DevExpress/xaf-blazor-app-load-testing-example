@@ -8,18 +8,26 @@ async function runTests (url, concurrency, headless) {
         concurrency: Cluster.CONCURRENCY_CONTEXT,
         maxConcurrency: concurrency,
         monitor: false,
-        timeout: 180000
+        timeout: 600000
     });
-
-    await cluster.task(async ({ page, data }) => {
-        await listViewTest({ page, data });
-        await detailViewTest({ page, data });
-    });
-
-    const startTime = Date.now();
 
     try {
+        await cluster.task(async ({ page, data }) => {
+            await listViewTest({ page, data });
+            await detailViewTest({ page, data });
+        });
+
+        const startTime = Date.now();
+
         await Promise.all(new Array(concurrency).fill('').map(i => cluster.execute(url)));
+
+        const duration = (Date.now() - startTime) / 1000;
+
+        console.log(`All tests took ${duration} seconds`);
+
+        await cluster.idle();
+        await cluster.close();
+
     }
 
     catch (err) {
@@ -27,13 +35,6 @@ async function runTests (url, concurrency, headless) {
 
         throw err;
     }
-
-    const duration = (Date.now() - startTime) / 1000;
-
-    console.log(`All tests took ${duration} seconds`);
-
-    await cluster.idle();
-    await cluster.close();
 };
 
 module.exports = runTests;
