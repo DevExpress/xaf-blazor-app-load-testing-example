@@ -8,7 +8,7 @@ async function runTests (url, concurrency, headless) {
         concurrency: Cluster.CONCURRENCY_CONTEXT,
         maxConcurrency: concurrency,
         monitor: false,
-        timeout: 60000
+        timeout: 180000
     });
 
     await cluster.task(async ({ page, data }) => {
