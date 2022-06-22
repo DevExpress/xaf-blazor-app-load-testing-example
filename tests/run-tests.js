@@ -14,7 +14,7 @@ async function runTests (url, concurrency, headless) {
     // try {
         await cluster.task(async ({ page, data }) => {
             await listViewTest({ page, data });
-            await detailViewTest({ page, data });
+            // await detailViewTest({ page, data });
         });
 
         const startTime = Date.now();
