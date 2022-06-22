@@ -11,7 +11,7 @@ async function runTests (url, concurrency, headless) {
         timeout: 600000
     });
 
-    try {
+    // try {
         await cluster.task(async ({ page, data }) => {
             await listViewTest({ page, data });
             await detailViewTest({ page, data });
@@ -28,13 +28,13 @@ async function runTests (url, concurrency, headless) {
         await cluster.idle();
         await cluster.close();
 
-    }
+    // }
 
-    catch (err) {
-        console.log(err);
+    // catch (err) {
+    //     console.log(err);
 
-        throw err;
-    }
+    //     throw err;
+    // }
 };
 
 module.exports = runTests;
