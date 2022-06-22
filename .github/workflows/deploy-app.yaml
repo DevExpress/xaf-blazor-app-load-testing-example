@@ -17,7 +17,7 @@ jobs:
         oses: [UBUNTU]
     env:
       VM_IMAGE: ${{ matrix.oses }}
-    timeout-minutes: 30
+    timeout-minutes: 40
     steps:
       - name: Get ip
         run: echo "LOCAL_IP_ADDRESS=$(ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p')" >> $GITHUB_ENV
@@ -65,7 +65,7 @@ jobs:
           inputs: '{ "appUrl": "${{ env.LOCAL_IP_ADDRESS }}" }'
       - name: Show CPU usage
         run: |
-          echo "----- Load Testing Finished"
+          echo "----- Load Testing Finished -----"
           ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10
       - name: Show memory usage
         run: free
