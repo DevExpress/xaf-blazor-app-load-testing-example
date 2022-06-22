@@ -11,7 +11,7 @@ namespace LoadTestingApp.Module.DatabaseUpdate;
 
 // For more typical usage scenarios, be sure to check out https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Updating.ModuleUpdater
 public class Updater : ModuleUpdater {
-    private const int notesCount = 1000;
+    private const int notesCount = 2000;
     public Updater(IObjectSpace objectSpace, Version currentDBVersion) :
         base(objectSpace, currentDBVersion) {
     }
@@ -20,24 +20,18 @@ public class Updater : ModuleUpdater {
 
         for (int i = 0; i < notesCount; i++) {
             string noteName = string.Format("Note {0}", i);
+            string noteDescription = string.Format("This is sticky note {0}", i);
 
             StickyNote note = ObjectSpace.FirstOrDefault<StickyNote>(note => note.Name == noteName);
 
             if (note == null) {
                 note = ObjectSpace.CreateObject<StickyNote>();
                 note.Name = noteName;
+                note.Description = noteDescription;
             }
         }
 
         ObjectSpace.CommitChanges();
-        //string name = "MyName";
-        //DomainObject1 theObject = ObjectSpace.FirstOrDefault<DomainObject1>(u => u.Name == name);
-        //if(theObject == null) {
-        //    theObject = ObjectSpace.CreateObject<DomainObject1>();
-        //    theObject.Name = name;
-        //}
-
-		//ObjectSpace.CommitChanges(); //Uncomment this line to persist created object(s).
     }
     public override void UpdateDatabaseBeforeUpdateSchema() {
         base.UpdateDatabaseBeforeUpdateSchema();

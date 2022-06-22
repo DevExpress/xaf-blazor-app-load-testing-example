@@ -7,8 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "node ./tests/index.js",
-    "testcafe-test": "start node ./node-web-app/index.js && npx testcafe chrome ./tests/testcafe-experimental.js"
+    "test": "node ./tests/index.js"
   },
   "author": "Dmitry Ostashev",
   "license": "MIT",
