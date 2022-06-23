@@ -30,5 +30,7 @@ jobs:
           node-version: '14.x'
       - name: Install Packages
         run: npm i
-      - name: Run Tests
-        run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 20
+      # - name: Run Tests
+      #   run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 20
+      - name: Run testcafe tests
+        run: testcafe chrome:headless ./tests/list-view-testcafe-test.js -c 30 -s takeOnFails=true --dashboard-options token=${{ secrets.DASHBOARD_TOKEN }}
