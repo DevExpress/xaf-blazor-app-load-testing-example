@@ -12,6 +12,8 @@ env:
   VM_MEMORY: 3072
   VM_CPU: 4
   VM_IMAGE: UBUNTU
+  TESTCAFE_DASHBOARD_URL: https://ddev.testcafe.io
+  TESTCAFE_DASHBOARD_TOKEN: ${{ secrets.DASHBOARD_TOKEN }}
 
 jobs:
   run:
@@ -33,4 +35,4 @@ jobs:
       # - name: Run Tests
       #   run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 20
       - name: Run testcafe tests
-        run: testcafe chrome:headless ./tests/list-view-testcafe-test.js -c 30 -s takeOnFails=true --dashboard-options token=${{ secrets.DASHBOARD_TOKEN }}
+        run: testcafe chrome:headless ./tests/list-view-testcafe-test.js --reporter dashboard -c 10 -s takeOnFails=true
