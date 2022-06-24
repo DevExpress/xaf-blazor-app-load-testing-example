@@ -60,6 +60,7 @@ jobs:
           wait-for-completion: true
           inputs: '{ "appUrl": "${{ env.LOCAL_IP_ADDRESS }}" }'
       - name: Show CPU and memory usage
+        if: ${{ always() }}
         run: |
           cat memory.log
           cat cpu.log
