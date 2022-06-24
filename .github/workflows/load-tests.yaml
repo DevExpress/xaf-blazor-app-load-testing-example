@@ -20,7 +20,7 @@ jobs:
     runs-on: farm
     strategy:
       matrix:
-        workers: [worker_01, worker_02, worker_03]
+        workers: [worker_01, worker_02]
     env:
       WORKER_NAME: ${{ matrix.workers }}
     steps:
@@ -41,7 +41,7 @@ jobs:
       # - name: Run Tests
       #   run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 20
       - name: Run testcafe tests
-        run: npx testcafe chrome:headless ./tests/list-view-testcafe-test.js -c 10 -s path=artifacts/screenshots,pathPattern=${TEST_INDEX}/${USERAGENT}/${FILE_INDEX}.png
+        run: npx testcafe chrome:headless ./tests/list-view-testcafe-test.js -c 30 -s path=artifacts/screenshots,pathPattern=${TEST_INDEX}/${USERAGENT}/${FILE_INDEX}.png
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
