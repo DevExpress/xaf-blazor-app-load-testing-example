@@ -48,8 +48,8 @@ jobs:
         run: dotnet run --project LoadTestingApp.Blazor.Server --updateDatabase --forceUpdate --silent
       - name: Track memory and CPU usage
         run: |
-          while true; do free; sleep 30; kill $!; done &
-          while true; do ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10; sleep 30; kill $!; done &
+          while true; do free; sleep 20; kill $!; done >> memory.log &
+          while true; do ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10; sleep 20; kill $!; done >> cpu.log &
       - name: Run application
         run: dotnet run --project LoadTestingApp.Blazor.Server &
       - name: Run tests
@@ -59,9 +59,7 @@ jobs:
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           inputs: '{ "appUrl": "${{ env.LOCAL_IP_ADDRESS }}" }'
-      - name: Show CPU usage
+      - name: Show CPU and memory usage
         run: |
-          echo "----- Load Testing Finished -----"
-          ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10
-      - name: Show memory usage
-        run: free
+          cat memory.log
+          cat cpu.log
