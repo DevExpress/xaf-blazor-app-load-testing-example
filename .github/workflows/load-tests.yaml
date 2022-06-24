@@ -14,6 +14,7 @@ env:
   VM_IMAGE: UBUNTU
   TESTCAFE_DASHBOARD_URL: https://ddev.testcafe.io
   TESTCAFE_DASHBOARD_TOKEN: ${{ secrets.DASHBOARD_TOKEN }}
+  APP_URL: ${{ github.event.inputs.appUrl }}
 
 jobs:
   run:
@@ -41,9 +42,10 @@ jobs:
       # - name: Run Tests
       #   run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 20
       - name: Run testcafe tests
-        run: npx testcafe chrome:headless ./tests/list-view-testcafe-test.js -c 15 -s path=artifacts/screenshots,pathPattern=${TEST_INDEX}/${USERAGENT}/${FILE_INDEX}.png
+        run: npx testcafe chrome:headless ./tests/list-view-testcafe-test.js -c 15 -s path=screenshots,pathPattern=${TEST_INDEX}/${USERAGENT}/${FILE_INDEX}.png
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
+        if: ${{ always() }}
         with:
           name: screenshots
-          path: artifacts/screenshots
+          path: screenshots

@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 async function listViewTest({ page, data: url }) {
     const startTime = Date.now();
 
@@ -17,12 +20,18 @@ async function listViewTest({ page, data: url }) {
 
             await nextPageButton.click();
 
-            await page.waitForFunction(`document.querySelector(".dxbs-grid .page-link input").value === "${i + 2}"`);
+            await page.waitForFunction(`document.querySelector(".dxbs-grid .page-link input").value === "${i + 200}"`);
             await page.waitForTimeout(500);
         }
     }
     catch (err) {
-        await page.screenshot({ path: 'screenshot.png', type: 'png' });
+        const dir = path.resolve(path.join(__dirname, '../screenshots'));
+
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir);
+        }
+
+        await page.screenshot({ path: 'screenshots/screenshot.png', type: 'png' });
 
         throw err;
     }

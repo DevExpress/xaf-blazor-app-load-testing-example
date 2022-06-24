@@ -1,7 +1,7 @@
 import { Selector } from 'testcafe';
 
 fixture`List View`
-    .page`localhost:5000`;
+    .page`${process.env.APP_URL}:5002`;
 
 for (let i = 0; i < 30; i ++) {
     test(`List View Pages Navigation - ${i}`, async t => {
