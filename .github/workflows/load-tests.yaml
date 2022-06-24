@@ -21,7 +21,7 @@ jobs:
     runs-on: farm
     strategy:
       matrix:
-        workers: [worker_01, worker_02]
+        workers: [worker_01, worker_02, worker_03]
     env:
       WORKER_NAME: ${{ matrix.workers }}
     steps:
@@ -40,7 +40,7 @@ jobs:
       - name: Install Packages
         run: npm i
       - name: Run Tests
-        run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 40
+        run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 30
       # - name: Run testcafe tests
       #   run: npx testcafe chrome:headless ./tests/list-view-testcafe-test.js -e -c 10 -s path=screenshots,pathPattern=${TEST_INDEX}/${USERAGENT}/${FILE_INDEX}.png
       - name: Upload artifacts
