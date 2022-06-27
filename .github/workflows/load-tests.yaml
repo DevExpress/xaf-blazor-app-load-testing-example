@@ -21,7 +21,7 @@ jobs:
     runs-on: farm
     strategy:
       matrix:
-        workers: [worker_01, worker_02, worker_03]
+        workers: [worker_01, worker_02]
     env:
       WORKER_NAME: ${{ matrix.workers }}
     steps:
@@ -31,18 +31,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14.x'
-      - name: Install Chrome
-        run: |
-            wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-            sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-            sudo apt-get update
-            sudo apt-get install google-chrome-stable
       - name: Install Packages
         run: npm i
       - name: Run Tests
         run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 40
-      # - name: Run testcafe tests
-      #   run: npx testcafe chrome:headless ./tests/list-view-testcafe-test.js -e -c 10 -s path=screenshots,pathPattern=${TEST_INDEX}/${USERAGENT}/${FILE_INDEX}.png
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         if: ${{ always() }}

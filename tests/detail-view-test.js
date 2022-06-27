@@ -15,24 +15,22 @@ async function listViewTest({ page, data: url }) {
 
             await page.waitForTimeout(1500);
 
-            const lastName = await page.$('input[name="LastName"]');
+            // const lastName = await page.$('input[name="LastName"]');
+            // await lastName.type(`${i} - employee`);
 
-            await lastName.type(`${i} - employee`);
+            await page.waitForSelector('input[name="FirstName"]');
+
+            const firstName = await page.$('input[name="FirstName"]');
+            await firstName.click();
 
             await page.waitForTimeout(500);
 
             const saveButton = await page.waitForSelector('button[data-action-name="Save"]');
-
             await saveButton.click();
 
-            const firstName = await page.$('input[name="FirstName"]');
-
-            await firstName.click();
-
-            await page.waitForSelector('button[data-action-name="Save"].disabled')
+            await page.waitForSelector('button[data-action-name="Save"].disabled');
 
             const backButton = await page.waitForSelector('button[data-action-name="Back"]');
-
             await backButton.click();
         }
     }
