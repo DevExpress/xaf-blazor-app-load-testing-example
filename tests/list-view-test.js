@@ -17,10 +17,13 @@ async function listViewTest({ page, data: url }) {
 
             await nextPageButton.click();
 
+            await page.waitForTimeout(500);
+
             console.log(`Current page: ${i}`);
 
             await page.waitForFunction(`document.querySelector(".dxbs-grid .page-link input").value === "${i + 2}"`);
-            await page.waitForTimeout(500);
+
+            await page.waitForTimeout(1000);
         }
     }
     catch (err) {
