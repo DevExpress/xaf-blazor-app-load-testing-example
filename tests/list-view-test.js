@@ -22,7 +22,7 @@ async function listViewTest({ page, data: url }) {
         }
     }
     catch (err) {
-        await takeScreenshot();
+        await takeScreenshot(page);
 
         throw err;
     }

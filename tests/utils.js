@@ -14,7 +14,7 @@ function retry(fn, ms) {
     });
 }
 
-async function takeScreenshot () {
+async function takeScreenshot (page) {
     const dir = path.resolve(path.join(__dirname, '../screenshots'));
 
     if (!fs.existsSync(dir)) {
