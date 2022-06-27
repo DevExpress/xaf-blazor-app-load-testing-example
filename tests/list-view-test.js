@@ -4,7 +4,7 @@ const path = require('path');
 async function listViewTest({ page, data: url }) {
     const startTime = Date.now();
 
-    const { retry } = require('./utils');
+    const { retry, takeScreenshot } = require('./utils');
 
     await retry(() => page.goto(`${url}StickyNote_ListView`), 1000);
 
@@ -25,13 +25,7 @@ async function listViewTest({ page, data: url }) {
         }
     }
     catch (err) {
-        const dir = path.resolve(path.join(__dirname, '../screenshots'));
-
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir);
-        }
-
-        await page.screenshot({ path: 'screenshots/screenshot.png', type: 'png' });
+        await takeScreenshot();
 
         throw err;
     }

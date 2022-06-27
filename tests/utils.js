@@ -11,4 +11,14 @@ function retry (fn, ms) {
     });
 }
 
-module.exports = { retry };
+async function takeScreenshot () {
+    const dir = path.resolve(path.join(__dirname, '../screenshots'));
+
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+    }
+
+    await page.screenshot({ path: `screenshots/${process.env.WORKER_NAME}_screenshot.png`, type: 'png' });
+}
+
+module.exports = { retry, takeScreenshot };

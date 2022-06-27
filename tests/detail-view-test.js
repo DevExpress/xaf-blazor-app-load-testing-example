@@ -1,7 +1,7 @@
 async function listViewTest({ page, data: url }) {
     const startTime = Date.now();
 
-    const { retry } = require('./utils');
+    const { retry, takeScreenshot } = require('./utils');
 
     await retry(() => page.goto(`${url}Employee_ListView`), 1000);
 
@@ -35,7 +35,7 @@ async function listViewTest({ page, data: url }) {
         }
     }
     catch (err) {
-        await page.screenshot({ path: 'screenshot.png', type: 'png' });
+        await takeScreenshot();
 
         throw err;
     }
