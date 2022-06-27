@@ -1,4 +1,7 @@
-function retry (fn, ms) {
+const fs = require('fs');
+const path = require('path');
+
+function retry(fn, ms) {
     return new Promise(resolve => {
         fn()
             .then(resolve)

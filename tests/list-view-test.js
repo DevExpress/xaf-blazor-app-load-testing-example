@@ -1,6 +1,3 @@
-const fs = require('fs');
-const path = require('path');
-
 async function listViewTest({ page, data: url }) {
     const startTime = Date.now();
 
