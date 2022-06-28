@@ -14,14 +14,14 @@ function retry(fn, ms) {
     });
 }
 
-async function takeScreenshot (page) {
+async function takeScreenshot (page, instance) {
     const dir = path.resolve(path.join(__dirname, '../screenshots'));
 
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
     }
 
-    await page.screenshot({ path: `screenshots/${process.env.WORKER_NAME}_screenshot.png`, type: 'png' });
+    await page.screenshot({ path: `screenshots/${process.env.WORKER_NAME}_${instance}_screenshot.png`, type: 'png' });
 }
 
 module.exports = { retry, takeScreenshot };
