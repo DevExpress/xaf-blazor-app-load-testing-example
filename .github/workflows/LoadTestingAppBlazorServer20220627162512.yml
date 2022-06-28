@@ -1,8 +1,7 @@
 name: Build and deploy .NET Core app to Linux WebApp LoadTestingAppBlazorServer20220627162512
 on:
-  push:
-    branches:
-    - add-detail-view
+  workflow_dispatch:
+
 env:
   AZURE_WEBAPP_NAME: LoadTestingAppBlazorServer20220627162512
   AZURE_WEBAPP_PACKAGE_PATH: LoadTestingApp.Blazor.Server/publish
