@@ -58,7 +58,7 @@ jobs:
           workflow: Load Testing
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
-          inputs: '{ "appUrl": "${{ env.LOCAL_IP_ADDRESS }}" }'
+          inputs: '{ "appUrl": "${{ env.LOCAL_IP_ADDRESS }}:5002" }'
       - name: Show CPU usage
         if: ${{ always() }}
         run: cat cpu.log
