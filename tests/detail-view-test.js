@@ -8,6 +8,7 @@ async function listViewTest({ page, data: url }) {
     try {
         for (let i = 0; i < 5; i++) {
             await page.waitForSelector('.dxbs-grid .card');
+            await page.waitForSelector('tr.cursor-pointer');
 
             const rows = await page.$$('tr.cursor-pointer');
 
