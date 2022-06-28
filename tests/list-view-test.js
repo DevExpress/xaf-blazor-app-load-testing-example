@@ -1,5 +1,5 @@
 async function listViewTest(page) {
-    await page.waitForSelector('.dxbs-grid .card');
+    await page.waitForSelector('.dxbs-grid .card', { timeout: 60000 });
 
     await page.evaluate(() => {
         window.scrollTo(0, window.document.body.scrollHeight);

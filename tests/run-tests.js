@@ -9,20 +9,13 @@ async function runTestFunc (page, url, instance, testFunc) {
 
     try {
         await testFunc(page);
-
-        console.log(`Worker ${instance} finished successfully.`);
     }
 
     catch (err) {
         await takeScreenshot(page, instance);
 
-        console.log(`Worker ${instance} failed.`);
-        console.log(err);
-
-        return false;
+        throw err;
     }
-
-    return true;
 }
 
 async function runTests(url, concurrency, headless) {
@@ -39,8 +32,19 @@ async function runTests(url, concurrency, headless) {
     let succededTests = 0;
 
     await Promise.all(new Array(concurrency).fill('').map((item, index) => cluster.execute(url, async ({ page, data: url }) => {
-        if (await runTestFunc(page, `${url}/StickyNote_ListView`, index, listViewTest) && await runTestFunc(page, `${url}/Employee_ListView`, index, detailViewTest))
+        try {
+            await runTestFunc(page, `${url}/StickyNote_ListView`, index, listViewTest);
+            await runTestFunc(page, `${url}/Employee_ListView`, index, detailViewTest);
+
             succededTests++;
+
+            console.log(`Worker ${index} finished successfully.`);
+        }
+        catch (err) {
+            console.log(`Worker ${index} failed.`);
+            console.log(err);
+        }
+            
     })));
 
     const duration = (Date.now() - startTime) / 1000;
@@ -50,6 +54,9 @@ async function runTests(url, concurrency, headless) {
 
     await cluster.idle();
     await cluster.close();
+
+    if (succededTests !== concurrency)
+        throw new Error('Some test instances are failed');
 };
 
 module.exports = runTests;
