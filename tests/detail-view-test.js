@@ -13,8 +13,8 @@ async function detailViewTest(page) {
 
         await page.waitForSelector('input[name="FirstName"]');
 
-        const firstName = await page.$('input[name="FirstName"]');
-        await firstName.click();
+        // const firstName = await page.$('input[name="FirstName"]');
+        // await firstName.click();
 
         await page.goBack();
     }
