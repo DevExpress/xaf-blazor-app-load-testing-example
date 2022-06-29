@@ -6,7 +6,7 @@ on:
     branches: [ main ]
 
 env:
-  VM_MEMORY: 8192
+  VM_MEMORY: 12288
   VM_CPU: 6
 
 jobs:
