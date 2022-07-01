@@ -20,7 +20,7 @@ jobs:
   run:
     runs-on: farm
     strategy:
-      fail-fast: true: false
+      fail-fast: false
       matrix:
         workers: [worker_01, worker_02, worker_03, worker_04]
     env:
