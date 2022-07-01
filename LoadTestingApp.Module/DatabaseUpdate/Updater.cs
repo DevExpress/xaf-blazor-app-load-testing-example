@@ -12,7 +12,7 @@ namespace LoadTestingApp.Module.DatabaseUpdate;
 // For more typical usage scenarios, be sure to check out https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Updating.ModuleUpdater
 public class Updater : ModuleUpdater {
     private const int notesCount = 2000;
-    private const int employeesCount = 5;
+    private const int employeesCount = 10;
     public Updater(IObjectSpace objectSpace, Version currentDBVersion) :
         base(objectSpace, currentDBVersion) {
     }
