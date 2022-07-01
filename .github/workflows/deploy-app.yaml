@@ -6,8 +6,8 @@ on:
     branches: [ main ]
 
 env:
-  VM_MEMORY: 12288
-  VM_CPU: 6
+  VM_MEMORY: 16384
+  VM_CPU: 8
 
 jobs:
   run:
@@ -47,9 +47,9 @@ jobs:
       - name: Update database
         run: dotnet run --project LoadTestingApp.Blazor.Server --updateDatabase --forceUpdate --silent
       - name: Track memory usage
-        run: while true; do free >> memory.log; sleep 20; done &
+        run: while true; do free >> memory.log; sleep 10; done &
       - name: Track CPU usage
-        run: while true; do ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10 >> cpu.log; sleep 20; done &
+        run: while true; do ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10 >> cpu.log; sleep 10; done &
       - name: Run application
         run: dotnet run --project LoadTestingApp.Blazor.Server &
       - name: Run tests
