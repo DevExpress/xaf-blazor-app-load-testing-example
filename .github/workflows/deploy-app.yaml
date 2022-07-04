@@ -2,21 +2,14 @@ name: Build and Run Application
 
 on:
   workflow_dispatch:
-    pull_request:
-    branches: [ main ]
 
-env:
-  VM_MEMORY: 16384
-  VM_CPU: 8
+# env:
+#   VM_MEMORY: 8192
+#   VM_CPU: 6
 
 jobs:
   run:
-    runs-on: farm
-    strategy:
-      matrix:
-        oses: [UBUNTU]
-    env:
-      VM_IMAGE: ${{ matrix.oses }}
+    runs-on: [self-hosted, Linux, X64, xaf-load-testing]
     timeout-minutes: 40
     steps:
       - name: Get ip
@@ -24,20 +17,18 @@ jobs:
       - name: Show IP
         run: echo ${{ env.LOCAL_IP_ADDRESS }}
       - name: Checkout
-        uses: ./../../checkout
-      - name: Use Node.js
-        run: |
-          curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
-          sudo bash /tmp/nodesource_setup.sh
-          sudo apt install nodejs
-      - name: Set npm registry
-        run: npm config set registry https://registry.npmjs.org/
-      - name: Install sqlite
-        run: sudo npm i -g sqlite3
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 6.0.x
+        uses: actions/checkout@v2
+      # - name: Use Node.js
+      #   run: |
+      #     curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
+      #     sudo bash /tmp/nodesource_setup.sh
+      #     sudo apt install nodejs
+      # - name: Set npm registry
+      #   run: npm config set registry https://registry.npmjs.org/
+      # - name: Setup .NET
+      #   uses: actions/setup-dotnet@v1
+      #   with:
+      #     dotnet-version: 6.0.x
       - name: Add DevExpress NuGet Package Source
         run: dotnet nuget add source ${{ secrets.DEVEXPRESS_NUGET_URL }}
       - name: Restore dependencies
