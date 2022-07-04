@@ -1,4 +1,4 @@
-name: Build and Run Application
+name: Build and Run Application on Linux
 
 on:
   workflow_dispatch:
@@ -11,26 +11,33 @@ jobs:
   run:
     runs-on: [self-hosted, Linux, X64, xaf-load-testing]
     timeout-minutes: 40
+    env:
+      CONNECTION_STRING: LocalDbConnectionString
     steps:
       - name: Get ip
         run: echo "LOCAL_IP_ADDRESS=$(ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p')" >> $GITHUB_ENV
       - name: Show IP
         run: echo ${{ env.LOCAL_IP_ADDRESS }}
       - name: Checkout
-        uses: actions/checkout@v2
-      # - name: Use Node.js
-      #   run: |
-      #     curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
-      #     sudo bash /tmp/nodesource_setup.sh
-      #     sudo apt install nodejs
-      # - name: Set npm registry
-      #   run: npm config set registry https://registry.npmjs.org/
-      # - name: Setup .NET
-      #   uses: actions/setup-dotnet@v1
-      #   with:
-      #     dotnet-version: 6.0.x
-      # - name: Add DevExpress NuGet Package Source
-      #   run: dotnet nuget add source ${{ secrets.DEVEXPRESS_NUGET_URL }} -n devexpress-nuget
+        uses: ./../../checkout
+      - name: Use Node.js
+        run: |
+          curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
+          sudo bash /tmp/nodesource_setup.sh
+          sudo apt install nodejs
+      - name: Set npm registry
+        run: npm config set registry https://registry.npmjs.org/
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      - name: Add DevExpress NuGet Package Source
+        if: ${{ always() }}
+        run: dotnet nuget add source ${{ secrets.DEVEXPRESS_NUGET_URL }} -n devexpress-nuget
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
