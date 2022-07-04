@@ -16,5 +16,9 @@
     "puppeteer": "^14.1.2",
     "puppeteer-cluster": "^0.23.0",
     "testcafe": "^1.19.0"
+  },
+  "devDependencies": {
+    "artillery": "^2.0.0-19",
+    "artillery-engine-playwright": "^0.0.6"
   }
 }
