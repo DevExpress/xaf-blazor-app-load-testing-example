@@ -27,6 +27,9 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --no-restore
+      - name: Drop database
+        continue-on-error: true
+        run: sudo mysql -e "DROP DATABASE LoadTestingApp;"
       - name: Update database
         run: dotnet run --project LoadTestingApp.Blazor.Server --updateDatabase --forceUpdate --silent
       - name: Run application
