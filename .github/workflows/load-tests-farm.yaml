@@ -1,0 +1,42 @@
+name: Load Testing
+
+on:
+  workflow_dispatch:
+    inputs:
+      appUrl:
+        description: 'Appliation url'  
+        required: true
+        default: ''
+
+env:
+  VM_MEMORY: 4092
+  VM_CPU: 4
+  VM_IMAGE: UBUNTU
+  APP_URL: ${{ github.event.inputs.appUrl }}
+
+jobs:
+  run:
+    runs-on: farm
+    strategy:
+      matrix:
+        workers: [worker_01, worker_02]
+      fail-fast: false
+    env:
+      WORKER_NAME: ${{ matrix.workers }}
+    steps:
+      - name: Checkout
+        uses: ./../../checkout
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - name: Install Packages
+        run: npm i
+      - name: Run Tests
+        run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 60
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: screenshots
+          path: screenshots

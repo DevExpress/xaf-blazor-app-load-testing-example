@@ -57,7 +57,8 @@ public class Startup {
                 .AddXpo((serviceProvider, options) => {
                     string connectionString = null;
                     string connectionStringName = System.Environment.GetEnvironmentVariable("CONNECTION_STRING");
-                    if (string.IsNullOrEmpty(connectionString))
+
+                    if (string.IsNullOrEmpty(connectionStringName))
                         connectionStringName = "ConnectionString";
                     if(Configuration.GetConnectionString(connectionStringName) != null) {
                         connectionString = Configuration.GetConnectionString(connectionStringName);

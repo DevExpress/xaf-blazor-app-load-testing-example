@@ -3,16 +3,16 @@ name: Build and Run Application on Linux
 on:
   workflow_dispatch:
 
-# env:
-#   VM_MEMORY: 8192
-#   VM_CPU: 6
+env:
+  VM_MEMORY: 8192
+  VM_CPU: 6
 
 jobs:
   run:
-    runs-on: [self-hosted, Linux, X64, xaf-load-testing]
+    runs-on: farm
     timeout-minutes: 40
     env:
-      CONNECTION_STRING: LocalDbConnectionString
+      CONNECTION_STRING: MySqlConnectionString
     steps:
       - name: Get ip
         run: echo "LOCAL_IP_ADDRESS=$(ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p')" >> $GITHUB_ENV
@@ -25,12 +25,17 @@ jobs:
           curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
           sudo bash /tmp/nodesource_setup.sh
           sudo apt install nodejs
+      - name: Set up MySql
+        run: |
+          sudo add-apt-repository main
+          sudo add-apt-repository universe
+          sudo add-apt-repository restricted
+          sudo add-apt-repository multiverse
+          sudo apt update
+          sudo apt install -y mysql-server
+          sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO testuser@localhost IDENTIFIED BY 'Qwerty1';"
       - name: Set npm registry
         run: npm config set registry https://registry.npmjs.org/
-      - name: Use Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
