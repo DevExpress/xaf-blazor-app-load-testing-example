@@ -30,7 +30,7 @@ jobs:
       - name: Install Packages
         run: npm i
       - name: Run Tests
-        run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 50
+        run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 30
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         if: ${{ always() }}
