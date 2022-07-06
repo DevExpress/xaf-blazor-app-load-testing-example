@@ -6,6 +6,7 @@ on:
 env:
   VM_MEMORY: 8192
   VM_CPU: 6
+  VM_IMAGE: UBUNTU
 
 jobs:
   run:
@@ -58,7 +59,7 @@ jobs:
       - name: Run tests
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
-          workflow: Load Testing
+          workflow: Load Testing (Farm)
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           inputs: '{ "appUrl": "${{ env.LOCAL_IP_ADDRESS }}:5002" }'
