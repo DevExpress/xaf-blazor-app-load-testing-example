@@ -1,4 +1,4 @@
-name: Build and Run Application on Linux
+name: Build and Run Application on Linux (Farm)
 
 on:
   workflow_dispatch:

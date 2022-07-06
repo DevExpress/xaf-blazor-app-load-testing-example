@@ -1,4 +1,4 @@
-name: Load Testing
+name: Load Testing (Farm)
 
 on:
   workflow_dispatch:
