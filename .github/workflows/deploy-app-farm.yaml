@@ -6,6 +6,7 @@ on:
 env:
   VM_MEMORY: 8192
   VM_CPU: 6
+  VM_IMAGE: UBUNTU
 
 jobs:
   run:
@@ -33,7 +34,7 @@ jobs:
           sudo add-apt-repository multiverse
           sudo apt update
           sudo apt install -y mysql-server
-          sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO testuser@localhost IDENTIFIED BY 'Qwerty1';"
+          sudo mysql -e "CREATE USER 'testuser'@'localhost' IDENTIFIED BY 'qwerty1'; GRANT ALL PRIVILEGES ON *.* TO testuser@localhost; FLUSH PRIVILEGES;"
       - name: Set npm registry
         run: npm config set registry https://registry.npmjs.org/
       - name: Setup .NET
@@ -41,7 +42,7 @@ jobs:
         with:
           dotnet-version: 6.0.x
       - name: Add DevExpress NuGet Package Source
-        if: ${{ always() }}
+        continue-on-error: true
         run: dotnet nuget add source ${{ secrets.DEVEXPRESS_NUGET_URL }} -n devexpress-nuget
       - name: Restore dependencies
         run: dotnet restore
@@ -58,7 +59,7 @@ jobs:
       - name: Run tests
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
-          workflow: Load Testing
+          workflow: Load Testing (Farm)
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           inputs: '{ "appUrl": "${{ env.LOCAL_IP_ADDRESS }}:5002" }'
