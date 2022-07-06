@@ -1,4 +1,4 @@
-name: Load Testing
+name: Load Testing (Farm)
 
 on:
   workflow_dispatch:
@@ -9,16 +9,18 @@ on:
         default: ''
 
 env:
-  VM_MEMORY: 2600
+  VM_MEMORY: 4092
   VM_CPU: 4
   VM_IMAGE: UBUNTU
+  APP_URL: ${{ github.event.inputs.appUrl }}
 
 jobs:
   run:
     runs-on: farm
     strategy:
       matrix:
-        workers: [worker_01, worker_02, worker_03]
+        workers: [worker_01, worker_02]
+      fail-fast: false
     env:
       WORKER_NAME: ${{ matrix.workers }}
     steps:
@@ -31,4 +33,10 @@ jobs:
       - name: Install Packages
         run: npm i
       - name: Run Tests
-        run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 30
+        run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 60
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: screenshots
+          path: screenshots

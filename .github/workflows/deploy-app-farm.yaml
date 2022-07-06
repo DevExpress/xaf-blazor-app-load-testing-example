@@ -1,24 +1,18 @@
-name: Build and Run Application
+name: Build and Run Application on Linux (Farm)
 
 on:
   workflow_dispatch:
-    pull_request:
-    branches: [ main ]
 
 env:
-  VM_MEMORY: 2600
-  VM_CPU: 4
-#   VM_IMAGE: WIN10
+  VM_MEMORY: 8192
+  VM_CPU: 6
 
 jobs:
   run:
     runs-on: farm
-    strategy:
-      matrix:
-        oses: [UBUNTU]
+    timeout-minutes: 40
     env:
-      VM_IMAGE: ${{ matrix.oses }}
-    timeout-minutes: 30
+      CONNECTION_STRING: MySqlConnectionString
     steps:
       - name: Get ip
         run: echo "LOCAL_IP_ADDRESS=$(ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p')" >> $GITHUB_ENV
@@ -31,38 +25,46 @@ jobs:
           curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
           sudo bash /tmp/nodesource_setup.sh
           sudo apt install nodejs
+      - name: Set up MySql
+        run: |
+          sudo add-apt-repository main
+          sudo add-apt-repository universe
+          sudo add-apt-repository restricted
+          sudo add-apt-repository multiverse
+          sudo apt update
+          sudo apt install -y mysql-server
+          sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO testuser@localhost IDENTIFIED BY 'Qwerty1';"
       - name: Set npm registry
         run: npm config set registry https://registry.npmjs.org/
-      - name: Install sqlite
-        run: sudo npm i -g sqlite3
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.x
       - name: Add DevExpress NuGet Package Source
-        run: dotnet nuget add source ${{ secrets.DEVEXPRESS_NUGET_URL }}
+        if: ${{ always() }}
+        run: dotnet nuget add source ${{ secrets.DEVEXPRESS_NUGET_URL }} -n devexpress-nuget
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
         run: dotnet build --no-restore
       - name: Update database
         run: dotnet run --project LoadTestingApp.Blazor.Server --updateDatabase --forceUpdate --silent
-      - name: Install Packages
-        run: npm i
+      - name: Track memory usage
+        run: while true; do free >> memory.log; sleep 10; done &
+      - name: Track CPU usage
+        run: while true; do ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10 >> cpu.log; sleep 10; done &
       - name: Run application
         run: dotnet run --project LoadTestingApp.Blazor.Server &
-      - name: Show CPU usage
-        run: ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10
-      - name: Show memory usage
-        run: free
       - name: Run tests
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
           workflow: Load Testing
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
-          inputs: '{ "appUrl": "${{ env.LOCAL_IP_ADDRESS }}" }'
+          inputs: '{ "appUrl": "${{ env.LOCAL_IP_ADDRESS }}:5002" }'
       - name: Show CPU usage
-        run: ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10
+        if: ${{ always() }}
+        run: cat cpu.log
       - name: Show memory usage
-        run: free
+        if: ${{ always() }}
+        run: cat memory.log

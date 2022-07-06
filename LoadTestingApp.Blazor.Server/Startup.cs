@@ -56,8 +56,12 @@ public class Startup {
             builder.ObjectSpaceProviders
                 .AddXpo((serviceProvider, options) => {
                     string connectionString = null;
-                    if(Configuration.GetConnectionString("ConnectionString") != null) {
-                        connectionString = Configuration.GetConnectionString("ConnectionString");
+                    string connectionStringName = System.Environment.GetEnvironmentVariable("CONNECTION_STRING");
+
+                    if (string.IsNullOrEmpty(connectionStringName))
+                        connectionStringName = "ConnectionString";
+                    if(Configuration.GetConnectionString(connectionStringName) != null) {
+                        connectionString = Configuration.GetConnectionString(connectionStringName);
                     }
 #if EASYTEST
                     if(Configuration.GetConnectionString("EasyTestConnectionString") != null) {

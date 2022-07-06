@@ -14,7 +14,7 @@
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DevExpress.ExpressApp" Version="22.1.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp" Version="22.1.3" />
     <PackageReference Include="DevExpress.ExpressApp.AuditTrail.Xpo" Version="22.1.3" />
     <PackageReference Include="DevExpress.ExpressApp.CloneObject.Xpo" Version="22.1.3" />
     <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="22.1.3" />

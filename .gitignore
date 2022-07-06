@@ -108,3 +108,7 @@ bin
 obj
 
 *.csproj.user
+.vs
+*.dll
+*.exe
+screenshots
