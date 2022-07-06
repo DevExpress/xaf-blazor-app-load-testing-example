@@ -19,7 +19,7 @@ jobs:
     runs-on: farm
     strategy:
       matrix:
-        workers: [worker_01, worker_02]
+        workers: [worker_01, worker_02, worker_03]
       fail-fast: false
     env:
       WORKER_NAME: ${{ matrix.workers }}
@@ -33,7 +33,7 @@ jobs:
       - name: Install Packages
         run: npm i
       - name: Run Tests
-        run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 60
+        run: node ./tests/index.js ${{ github.event.inputs.appUrl }} 50
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         if: ${{ always() }}
