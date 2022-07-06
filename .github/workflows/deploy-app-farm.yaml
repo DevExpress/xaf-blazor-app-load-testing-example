@@ -42,7 +42,7 @@ jobs:
         with:
           dotnet-version: 6.0.x
       - name: Add DevExpress NuGet Package Source
-        if: ${{ always() }}
+        continue-on-error: true
         run: dotnet nuget add source ${{ secrets.DEVEXPRESS_NUGET_URL }} -n devexpress-nuget
       - name: Restore dependencies
         run: dotnet restore
