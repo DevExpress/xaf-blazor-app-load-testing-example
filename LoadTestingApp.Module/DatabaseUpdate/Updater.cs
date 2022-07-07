@@ -12,7 +12,7 @@ namespace LoadTestingApp.Module.DatabaseUpdate;
 // For more typical usage scenarios, be sure to check out https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Updating.ModuleUpdater
 public class Updater : ModuleUpdater {
     private const int notesCount = 2000;
-    private const int employeesCount = 10;
+    private const int employeesCount = 20;
     public Updater(IObjectSpace objectSpace, Version currentDBVersion) :
         base(objectSpace, currentDBVersion) {
     }
@@ -22,11 +22,22 @@ public class Updater : ModuleUpdater {
         for (int i = 0; i < employeesCount; i++) {
             string employeeName = string.Format("Employee {0}", i);
 
-            Employee employee = ObjectSpace.FirstOrDefault<Employee>(employee => employee.FirstName == employeeName);
+            Employee employee = ObjectSpace.FirstOrDefault<Employee>(e => e.FirstName == employeeName);
 
             if (employee == null) {
                 employee = ObjectSpace.CreateObject<Employee>();
                 employee.FirstName = employeeName;
+
+                if (i > 0)
+                    employee.Manager = ObjectSpace.FirstOrDefault<Employee>(e => e.FirstName == string.Format("Employee {0}", i - 1));
+            }
+
+            for (int j = 0; j < 10; j++) {
+                Vacantion vacantion = ObjectSpace.CreateObject<Vacantion>();
+                vacantion.StartDate = DateTime.Now;
+                vacantion.EndDate = DateTime.Now.AddDays(14);
+                vacantion.Reason = "Sick days";
+                employee.Vacantions.Add(vacantion);
             }
         }
 
