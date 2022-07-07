@@ -20,7 +20,7 @@ public class Updater : ModuleUpdater {
         base.UpdateDatabaseAfterUpdateSchema();
 
         for (int i = 0; i < employeesCount; i++) {
-            string employeeName = string.Format("Employee {0}", i);
+            string employeeName = string.Format("Employee {0}#", i);
 
             Employee employee = ObjectSpace.FirstOrDefault<Employee>(e => e.FirstName == employeeName);
 
@@ -29,7 +29,7 @@ public class Updater : ModuleUpdater {
                 employee.FirstName = employeeName;
 
                 if (i > 0)
-                    employee.Manager = ObjectSpace.FirstOrDefault<Employee>(e => e.FirstName == string.Format("Employee {0}", i - 1));
+                    employee.Manager = ObjectSpace.FirstOrDefault<Employee>(e => e.FirstName == string.Format("Employee {0}#", i - 1));
             }
 
             for (int j = 0; j < 10; j++) {
