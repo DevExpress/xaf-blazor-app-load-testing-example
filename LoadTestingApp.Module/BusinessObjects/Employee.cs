@@ -9,6 +9,7 @@ namespace LoadTestingApp.Module.BusinessObjects {
 
         private Employee manager;
 
+        [VisibleInListViewAttribute(false)]
         public Employee Manager {
             get {
                 return manager;

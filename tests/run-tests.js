@@ -36,7 +36,7 @@ async function runTests(url, concurrency, headless) {
 
     await Promise.all(new Array(concurrency).fill('').map((item, index) => cluster.execute(url, async ({ page, data: url }) => {
         try {
-            await page.setViewport({ width: 0, height: 0});
+            await page.setViewport({ width: 800, height: 1200});
             // await runTestFunc(page, `${url}/StickyNote_ListView`, index, listViewTest);
             const workerStartTime = Date.now();
 
