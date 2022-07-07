@@ -28,29 +28,37 @@ async function runTests(url, concurrency, headless) {
     });
 
     const startTime = Date.now();
+    const workerTimings = [];
 
     let succededTests = 0;
 
+
     await Promise.all(new Array(concurrency).fill('').map((item, index) => cluster.execute(url, async ({ page, data: url }) => {
         try {
-            await runTestFunc(page, `${url}/StickyNote_ListView`, index, listViewTest);
+            // await runTestFunc(page, `${url}/StickyNote_ListView`, index, listViewTest);
+            const workerStartTime = Date.now();
+
             await runTestFunc(page, `${url}/Employee_ListView`, index, detailViewTest);
+
+            const workerDuration = (Date.now() - workerStartTime) / 1000;
 
             succededTests++;
 
-            console.log(`Worker ${index} finished successfully.`);
+            workerTimings.push(workerDuration);
+
+            console.log(`Worker ${index} finished successfully after ${workerDuration} seconds.`);
         }
         catch (err) {
             console.log(`Worker ${index} failed.`);
             console.log(err);
         }
-            
     })));
 
-    const duration = (Date.now() - startTime) / 1000;
+    const duration    = (Date.now() - startTime) / 1000;
+    const averageTime = workerTimings.reduce((acc, val) => acc+=val) / workerTimings.length;
 
     console.log(`${concurrency - succededTests} of ${concurrency} instances are failed.`);
-    console.log(`All tests took ${duration} seconds`);
+    console.log(`All tests took ${duration} seconds. Average: ${averageTime} s`);
 
     await cluster.idle();
     await cluster.close();
