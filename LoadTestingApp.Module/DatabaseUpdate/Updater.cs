@@ -30,6 +30,26 @@ public class Updater : ModuleUpdater {
 
                 if (i > 0)
                     employee.Manager = ObjectSpace.FirstOrDefault<Employee>(e => e.FirstName == string.Format("Employee {0}#", i - 1));
+
+                employee.Tutor = employee.Manager;
+
+                employee.Department = ObjectSpace.CreateObject<Department>();
+                employee.Department.Name = String.Format("Department {0}", i);
+
+                employee.Level = ObjectSpace.CreateObject<Level>();
+                employee.Level.Name = String.Format("Level {0}", i);
+
+                employee.Location = ObjectSpace.CreateObject<Location>();
+                employee.Location.Name = String.Format("Location {0}", i);
+
+                employee.Position = ObjectSpace.CreateObject<Position>();
+                employee.Position.Name = String.Format("Position {0}", i);
+
+                employee.Workplace = ObjectSpace.CreateObject<Workplace>();
+                employee.Workplace.Room = String.Format("Room {0}", i);
+
+                employee.CurrentProject = ObjectSpace.CreateObject<Project>();
+                employee.CurrentProject.Name = String.Format("Project {0}", i);
             }
 
             for (int j = 0; j < 10; j++) {

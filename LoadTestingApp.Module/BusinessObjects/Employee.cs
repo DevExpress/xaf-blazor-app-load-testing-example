@@ -11,12 +11,14 @@ namespace LoadTestingApp.Module.BusinessObjects {
 
         [VisibleInListViewAttribute(false)]
         public Employee Manager {
-            get {
-                return manager;
-            }
-            set {
-                SetPropertyValue(nameof(Manager), ref manager, value);
-            }
+            get => manager;
+            set => SetPropertyValue(nameof(Manager), ref manager, value);
+        }
+        private Employee tutor;
+        [VisibleInListViewAttribute(false)]
+        public Employee Tutor {
+            get => tutor;
+            set => SetPropertyValue(nameof(Tutor), ref tutor, value);
         }
 
         private string notes;
@@ -47,6 +49,37 @@ namespace LoadTestingApp.Module.BusinessObjects {
         public string LinkedinProfile {
             get => linkedinProfile;
             set => SetPropertyValue(nameof(LinkedinProfile), ref linkedinProfile, value);
+        }
+
+        private Department department;
+        public Department Department {
+            get => department;
+            set => SetPropertyValue(nameof(Department), ref department, value);
+        }
+        private Position position;
+        public Position Position {
+            get => position;
+            set => SetPropertyValue(nameof(Position), ref position, value);
+        }
+        private Location location;
+        public Location Location { 
+            get => location;
+            set => SetPropertyValue(nameof(Location), ref location, value);
+        }
+        private Workplace workplace;
+        public Workplace Workplace {
+            get => workplace;
+            set => SetPropertyValue(nameof(Workplace), ref workplace, value);
+        }
+        private Level level;
+        public Level Level {
+            get => level;
+            set => SetPropertyValue(nameof(Level), ref level, value);
+        }
+        private Project currentProject;
+        public Project CurrentProject {
+            get => currentProject;
+            set => SetPropertyValue(nameof(CurrentProject), ref currentProject, value);
         }
     }
 }
