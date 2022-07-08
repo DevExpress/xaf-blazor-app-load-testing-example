@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        workers: [worker_01, worker_02, worker_03, worker_04, worker_05, worker_06, worker_07]
+        workers: [worker_01, worker_02]
       fail-fast: false
     env:
       WORKER_NAME: ${{ matrix.workers }}
