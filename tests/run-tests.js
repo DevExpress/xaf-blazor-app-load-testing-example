@@ -38,17 +38,17 @@ async function runTests(url, concurrency, headless) {
         try {
             await page.setViewport({ width: 800, height: 1200});
             // await runTestFunc(page, `${url}/StickyNote_ListView`, index, listViewTest);
-            const workerStartTime = Date.now();
+            const workerStartTime = new Date();
 
             await runTestFunc(page, `${url}/Employee_ListView`, index, detailViewTest);
 
-            const workerDuration = (Date.now() - workerStartTime) / 1000;
+            const workerDuration = (Date.now() - workerStartTime.getTime()) / 1000;
 
             succededTests++;
 
             workerTimings.push(workerDuration);
 
-            console.log(`Worker ${index} finished successfully after ${workerDuration} seconds.`);
+            console.log(`Worker ${index} started at ${workerStartTime.toLocaleTimeString()} finished successfully after ${workerDuration} seconds.`);
         }
         catch (err) {
             console.log(`Worker ${index} failed.`);
