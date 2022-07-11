@@ -24,7 +24,7 @@ async function runTests(url, concurrency, headless) {
         concurrency: Cluster.CONCURRENCY_CONTEXT,
         maxConcurrency: concurrency,
         monitor: false,
-        timeout: 600000,
+        timeout: 1200000,
         defaultViewport: null
     });
 
@@ -37,9 +37,10 @@ async function runTests(url, concurrency, headless) {
     await Promise.all(new Array(concurrency).fill('').map((item, index) => cluster.execute(url, async ({ page, data: url }) => {
         try {
             await page.setViewport({ width: 800, height: 1200});
-            // await runTestFunc(page, `${url}/StickyNote_ListView`, index, listViewTest);
+
             const workerStartTime = new Date();
 
+            await runTestFunc(page, `${url}/StickyNote_ListView`, index, listViewTest);
             await runTestFunc(page, `${url}/Employee_ListView`, index, detailViewTest);
 
             const workerDuration = (Date.now() - workerStartTime.getTime()) / 1000;
