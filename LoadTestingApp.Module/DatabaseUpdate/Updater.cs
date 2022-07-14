@@ -19,6 +19,13 @@ public class Updater : ModuleUpdater {
     public override void UpdateDatabaseAfterUpdateSchema() {
         base.UpdateDatabaseAfterUpdateSchema();
 
+        Degree degree = ObjectSpace.FirstOrDefault<Degree>(d => d.Name == "Bachelor");
+
+        if (degree == null) {
+            degree = ObjectSpace.CreateObject<Degree>();
+            degree.Name = "Bachelor";
+        }
+        
         for (int i = 0; i < employeesCount; i++) {
             string employeeName = string.Format("Employee {0}#", i);
 
@@ -50,14 +57,8 @@ public class Updater : ModuleUpdater {
 
                 employee.CurrentProject = ObjectSpace.CreateObject<Project>();
                 employee.CurrentProject.Name = String.Format("Project {0}", i);
-            }
-
-            for (int j = 0; j < 10; j++) {
-                Vacantion vacantion = ObjectSpace.CreateObject<Vacantion>();
-                vacantion.StartDate = DateTime.Now;
-                vacantion.EndDate = DateTime.Now.AddDays(14);
-                vacantion.Reason = "Sick days";
-                employee.Vacantions.Add(vacantion);
+                
+                employee.Degree = degree;
             }
         }
 

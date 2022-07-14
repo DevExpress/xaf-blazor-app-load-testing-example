@@ -4,8 +4,8 @@ using DevExpress.Xpo;
 
 namespace LoadTestingApp.Module.BusinessObjects {
     [DefaultClassOptions]
-    public class Level : BaseObject {
-        public Level (Session session) : base (session) { }
+    public class Project: BaseObject {
+        public Project(Session session) : base(session) { }
 
         private string name;
         public string Name {

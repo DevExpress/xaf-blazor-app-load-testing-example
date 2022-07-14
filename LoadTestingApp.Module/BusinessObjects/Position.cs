@@ -7,7 +7,16 @@ namespace LoadTestingApp.Module.BusinessObjects {
     public class Position : BaseObject {
         public Position(Session session) : base(session) { }
 
-        public string Name { get; set; }
-        public string Description { get; set; }
+        private string name;
+        public string Name {
+            get => name;
+            set => SetPropertyValue(nameof(Name), ref name, value);
+        }
+
+        private string description;
+        public string Description {
+            get => description;
+            set => SetPropertyValue(nameof(Description), ref description, value);
+        }
     }
 }

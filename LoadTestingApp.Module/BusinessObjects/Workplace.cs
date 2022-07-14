@@ -1,13 +1,23 @@
 ﻿using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Xpo;
+using System.ComponentModel;
 
 namespace LoadTestingApp.Module.BusinessObjects {
-    [DefaultClassOptions]
+    [DefaultProperty("Room")]
     public class Workplace : BaseObject {
         public Workplace(Session session) : base(session) { }
 
-        public string Room { get; set; }
-        public string ComputerId { get; set; }
+        private string room;
+
+        public string Room {
+            get => room;
+            set => SetPropertyValue(nameof(Room), ref room, value);
+        }
+        private string computerId;
+        public string ComputerId {
+            get => computerId;
+            set => SetPropertyValue(nameof(ComputerId), ref computerId, value);
+        }
     }
 }

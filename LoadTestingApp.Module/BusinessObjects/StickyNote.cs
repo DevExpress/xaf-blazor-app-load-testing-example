@@ -13,8 +13,16 @@ namespace LoadTestingApp.Module.BusinessObjects {
     {
         public StickyNote(Session session) : base(session) { }
 
-        public string Name { get; set; }
+        private string name;
+        public string Name {
+            get => name;
+            set => SetPropertyValue(nameof(Name), ref name, value);
+        }
 
-        public string Description { get; set; }
+        private string description;
+        public string Description { 
+            get => description;
+            set => SetPropertyValue(nameof(Description), ref description, value);
+        }
     }
 }

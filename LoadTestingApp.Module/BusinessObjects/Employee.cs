@@ -28,9 +28,10 @@ namespace LoadTestingApp.Module.BusinessObjects {
             set => SetPropertyValue(nameof(Notes), ref notes, value);
         }
 
-        [Association("Employee-Vacantions")]
-        public XPCollection<Vacantion> Vacantions { 
-            get => GetCollection<Vacantion>(nameof(Vacantions));
+        private Degree degree;
+        public Degree Degree {
+            get => degree;
+            set => SetPropertyValue(nameof(Degree), ref degree, value);
         }
 
         private string githubProfile;
