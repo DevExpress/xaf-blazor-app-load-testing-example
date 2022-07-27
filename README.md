@@ -70,9 +70,5 @@ In the following example, we use a cloud virtual machine for building and runnin
 
 The workflow described in the `deploy-app-linux.yaml` file is running manually. It buildls and runs app on the self-hosted runner and then, triggers another workflow (`load-tests-linux.yaml`) which runs load tests themselves. We use the aurelien-baudet/workflow-dispatch@v2    action for this purpose (https://github.com/marketplace/actions/workflow-dispatch-and-wait). Note that we need to store GitHub personal access token (PAT) in the PERSONAL_TOKEN secret.
 
-So, two workflows are ready. You can launch the “Build and Run Application on Linux“ workflow, and it will trigger the “Load Testing”. Besides, you can deploy your app manually (e.g., to Azure App Services) and trigger just a second one with predefined application url:
-<img>
-
-The final report shows a number of the failed instances and exceptions message:
-<img>
+So, two workflows are ready. You can launch the “Build and Run Application on Linux“ workflow, and it will trigger the “Load Testing”. Besides, you can deploy your app manually (e.g., to Azure App Services) and trigger just a second one with predefined application url.
 
