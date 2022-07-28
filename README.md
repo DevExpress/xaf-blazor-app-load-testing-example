@@ -27,6 +27,8 @@ node ./tests/index.js localhost:5000 30
 
 There are two test script samples in this repo. For example, the [list-view-test.js](/tests/list-view-test.js) script opens List View with 100 records per page and switches between pages:
 
+![List View](/images/list-view.png)
+
 ```
 const DXGRID           = '.dxbs-grid .card';
 const NEXT_PAGE_BUTTON = '[data-args="PBN"] div svg';
@@ -57,8 +59,12 @@ module.exports = listViewTest;
 
 The [detail-view-test.js](/tests/detail-view-test.js) script is intended for checking Detail View concurrent loading.
 
+![Detail View](/images/detail-view.png)
+
 The [run-tests.js](/tests/run-tests.js) script launches all these tests with predefined concurrency and produces a report with information about successful and failed runs. Also, it can capture a screenshot when the test fails.
 
+![Test Log](/images/test-log.png)
+![Test Error](/images/test-error.png)
 
 ## GitHub Actions CI Integration
 
@@ -66,10 +72,13 @@ In the following example, we use a cloud virtual Ubuntu machine for building and
 
 The workflow described in the [deploy-app-linux.yaml](/.github/workflows/deploy-app-linux.yaml) file is running manually. It builds and runs an app on the self-hosted runner; then, it triggers another workflow [load-tests-linux.yaml](/.github/workflows/load-tests-linux.yaml), which runs load tests themselves. We use the [aurelien-baudet/workflow-dispatch@v2](https://github.com/marketplace/actions/workflow-dispatch-and-wait).
 
+![Failed task](/images/failed-task-on-CI.png)
+
 >**NOTE**: We store GitHub personal access token (PAT) in the PERSONAL_TOKEN secret.
 
 You can launch the “Build and Run Application on Linux“ workflow, and it will trigger the “Load Testing”. Besides, you can deploy your app manually (e.g., to Azure App Services) and trigger only a second one with a predefined application url.
 
+![Run tests for deploy](/images/run-with-url.png)
 
 ## See Also
 
