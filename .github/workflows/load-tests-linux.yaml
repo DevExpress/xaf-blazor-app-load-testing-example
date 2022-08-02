@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       appUrl:
-        description: 'Appliation url'  
+        description: 'Application url'  
         required: true
         default: ''
 
