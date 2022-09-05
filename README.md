@@ -82,6 +82,8 @@ You can launch the “Build and Run Application on Linux“ workflow, and it wil
 
 ## See Also
 
+- [Deploy and scale an XAF Blazor Server app to serve hundreds of users with Azure Kubernetes Service](https://github.com/DevExpress/XAF-Blazor-Kubernetes-example/)
 - [Deployment Recommendations for XAF Blazor UI Applications](https://docs.devexpress.com/eXpressAppFramework/403362/deployment/deployment-recommendations-blazor)
 - [XAF ASP.NET WebForms or Blazor Server UI for SaaS with 1000 users](https://supportcenter.devexpress.com/ticket/details/t585727/xaf-asp-net-webforms-or-blazor-server-ui-for-saas-with-1000-users)
+
 
