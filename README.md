@@ -1,5 +1,10 @@
 # XAF Blazor load testing on Linux and MySql using Puppeteer and GitHub Actions
 
+> XAF v26.1 includes multiple core/Blazor UI rendering optimizations designed to reduce memory usage and speed up code execution under high load. For more information, review our [What's New in v26.1 docs](https://www.devexpress.com/subscriptions/new-2026-1.xml#xaf-scalability-performance-optimizations) | [Technical FAQ](https://supportcenter.devexpress.com/ticket/details/s36497/faq-xaf-blazor-ui-v26-1-enhanced-scalability-performance-deployment-and-load-testing).
+> 
+> NOTE: XAF Blazor's high-load support is not yet “ready” in v26.1. We expect it to be ready for production use in v26.2 at the earliest. In the meantime, your feedback is appreciated on our [experimental or a early v26.1 preview](https://www.devexpress.com/aboutus/pre-release.xml). Please [create tickets in the Support Center](https://supportcenter.devexpress.com/ticket/create), if you experience any issues.
+
+
 This repository contains a mid-size XAF Blazor application with several views and high-load test scripts in the [tests](https://github.com/DevExpress/xaf-blazor-app-load-testing-example/tree/main/tests) directory (powered by the [Puppeteer](https://github.com/puppeteer/puppeteer), [puppeteer-cluster](https://github.com/thomasdondorf/puppeteer-cluster), and [GitHub Actions](https://github.com/features/actions) automation tools). These test scripts allow running a lot of concurrent browser instances on a cloud virtual Ubuntu machine with a pre-installed MySql database engine. In addition, we can test end user experience in case of moderate server usage/loading. Since the Blazor Server technology uses WebSocket connection instead of HTTP requests, traditional tools like JMeter are not suitable for this task.
 
 ## Getting Started
